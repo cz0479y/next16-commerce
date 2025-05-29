@@ -6,7 +6,11 @@
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prisma.studio": "npx prisma studio",
+    "prisma.seed": "tsx prisma/seed.ts",
+    "prisma.migrate": "npx prisma migrate dev",
+    "prisma.push": "npx prisma db push"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.8",
@@ -19,10 +23,12 @@
     "next": "^15.3.3",
     "postcss": "^8.5.4",
     "react": "^19.1.0",
+    "tsx": "^4.19.3",
     "react-dom": "^19.1.0",
     "server-only": "^0.0.1",
     "tailwind-merge": "^3.3.0",
     "tailwindcss": "^4.1.8",
+    "@prisma/client": "^6.5.0",
     "typescript": "5.8.3"
   },
   "devDependencies": {
@@ -31,6 +37,7 @@
     "@eslint/js": "^9.27.0",
     "@tailwindcss/typography": "^0.5.16",
     "@types/eslint": "^9.6.1",
+    "@prisma/client": "^6.5.0",
     "@typescript-eslint/eslint-plugin": "^8.33.0",
     "eslint-config-next": "15.3.3",
     "eslint-config-prettier": "^10.1.5",
