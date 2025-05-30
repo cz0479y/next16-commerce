@@ -1,6 +1,7 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
-import Header from '@/components/Header';
+
+import Link from 'next/link';
 import type { Metadata } from 'next';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -15,7 +16,13 @@ export default function RootLayout({ children, modal }: { children: React.ReactN
     <html lang="en">
       <body className={inter.className}>
         <div className="flex flex-col gap-10 p-10">
-          <Header />
+          <header className="border-divider dark:border-divider-dark border-b bg-white py-4 dark:bg-black">
+            <h1 className="text-3xl font-bold">
+              <Link href="/" className="text-primary hover:text-primary-dark">
+                Commerce
+              </Link>
+            </h1>
+          </header>
           {children}
         </div>
         {modal}

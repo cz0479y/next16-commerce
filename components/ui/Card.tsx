@@ -1,8 +1,19 @@
 import React from 'react';
+import { cn } from '@/utils/cn';
 
-export default function Card({ children }: { children: React.ReactNode }) {
+type Props = {
+  children: React.ReactNode;
+  className?: string;
+};
+
+export default function Card({ children, className }: Props) {
   return (
-    <div className="border-divider dark:border-divider-dark dark:bg-card-dark rounded-lg border bg-white p-6 shadow-sm">
+    <div
+      className={cn(
+        'border-divider dark:border-divider-dark dark:bg-card-dark rounded-lg border bg-white p-6 shadow-sm',
+        className,
+      )}
+    >
       {children}
     </div>
   );
