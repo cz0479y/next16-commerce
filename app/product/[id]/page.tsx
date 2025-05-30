@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React, { Suspense } from 'react';
 import Product, { ProductSkeleton } from '@/components/Product';
+import ProductDetails, { ProductDetailsSkeleton } from '@/components/ProductDetails';
 import Reviews, { ReviewsSkeleton } from '@/components/Reviews';
 import Card from '@/components/ui/Card';
 
@@ -19,10 +20,17 @@ export default async function ProductPage({ params }: Props) {
       <Link href="/" className="text-primary hover:text-primary-dark inline-flex items-center text-sm font-medium">
         {'<- Back to Home'}
       </Link>
-      <div className="mx-150 flex flex-col gap-8">
+      <div className="mx-0 flex flex-col gap-8 sm:mx-20 md:mx-40 lg:mx-80">
         <Card>
           <Suspense fallback={<ProductSkeleton />}>
-            <Product productId={productId} />
+            <Product
+              productId={productId}
+              details={
+                <Suspense fallback={<ProductDetailsSkeleton />}>
+                  <ProductDetails productId={productId} />
+                </Suspense>
+              }
+            />
           </Suspense>
         </Card>
         <div>

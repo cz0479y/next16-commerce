@@ -27,26 +27,58 @@ const REVIEWS = [
   {
     comment: 'Best headphones I have ever owned. The noise cancellation is amazing!',
     productId: 1,
-    // Wireless Headphones
     rating: 5,
   },
   {
     comment: 'Great sound quality but a bit uncomfortable after long use.',
     productId: 1,
-    // Wireless Headphones
     rating: 4,
   },
   {
     comment: 'Perfect fitness companion, battery lasts for days!',
     productId: 2,
-    // Smart Watch
     rating: 5,
   },
   {
     comment: 'Good sound but not as loud as I expected.',
     productId: 3,
-    // Portable Speaker
     rating: 3,
+  },
+];
+
+const PRODUCT_DETAILS = [
+  {
+    brand: 'SoundMaster',
+    dimensions: '7.5 x 6.5 x 3.2 inches',
+    materials: 'Memory foam, aluminum, plastic',
+    origin: 'Japan',
+    productId: 1,
+    sku: 'WH-NC100',
+    stockCount: 45,
+    warrantyInfo: '2 year limited warranty',
+    weight: 0.25,
+  },
+  {
+    brand: 'TechFit',
+    dimensions: '1.6 x 1.6 x 0.5 inches',
+    materials: 'Silicone, aluminum, glass',
+    origin: 'China',
+    productId: 2,
+    sku: 'SW-FIT200',
+    stockCount: 32,
+    warrantyInfo: '1 year limited warranty',
+    weight: 0.05,
+  },
+  {
+    brand: 'AudioPro',
+    dimensions: '5.5 x 5.5 x 8.2 inches',
+    materials: 'Rubber, fabric, plastic',
+    origin: 'Taiwan',
+    productId: 3,
+    sku: 'PS-BT300',
+    stockCount: 78,
+    warrantyInfo: '1 year limited warranty',
+    weight: 0.6,
   },
 ];
 
@@ -86,6 +118,30 @@ async function seed() {
     })
     .catch(e => {
       console.error('[SEED] Failed to create review records', e);
+    });
+
+  await Promise.all(
+    PRODUCT_DETAILS.map(detail => {
+      return prisma.productDetail.create({
+        data: {
+          brand: detail.brand,
+          dimensions: detail.dimensions,
+          materials: detail.materials,
+          origin: detail.origin,
+          productId: detail.productId,
+          sku: detail.sku,
+          stockCount: detail.stockCount,
+          warrantyInfo: detail.warrantyInfo,
+          weight: detail.weight,
+        },
+      });
+    }),
+  )
+    .then(() => {
+      console.info('[SEED] Successfully created product details records');
+    })
+    .catch(e => {
+      console.error('[SEED] Failed to create product details records', e);
     });
 }
 

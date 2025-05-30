@@ -6,9 +6,10 @@ import Skeleton from './ui/Skeleton';
 
 type Props = {
   productId: number;
+  details?: React.ReactNode;
 };
 
-export default async function Product({ productId }: Props) {
+export default async function Product({ productId, details }: Props) {
   const product = await getProduct(productId);
 
   return (
@@ -21,6 +22,7 @@ export default async function Product({ productId }: Props) {
           <p className="text-primary text-lg font-semibold">${product.price.toFixed(2)}</p>
         </div>
       </div>
+      {details}
     </div>
   );
 }

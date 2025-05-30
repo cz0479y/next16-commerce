@@ -12,13 +12,31 @@ datasource db {
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String?
-  price       Float
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  Review      Review[]
+  id            Int            @id @default(autoincrement())
+  name          String
+  description   String?
+  price         Float
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  Review        Review[]
+  productDetail ProductDetail?
+}
+
+model ProductDetail {
+  id           Int      @id @default(autoincrement())
+  productId    Int      @unique
+  sku          String?
+  brand        String?
+  stockCount   Int      @default(0)
+  weight       Float?
+  dimensions   String?
+  materials    String?
+  origin       String?
+  warrantyInfo String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  product Product @relation(fields: [productId], references: [id])
 }
 
 model Review {

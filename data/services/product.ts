@@ -20,6 +20,22 @@ export async function getProduct(productId: number) {
   return product;
 }
 
+export async function getProductDetails(productId: number) {
+  'use cache';
+  cacheLife('hours');
+
+  await slow();
+
+  const productDetails = await prisma.productDetail.findUnique({
+    where: { productId },
+  });
+
+  if (!productDetails) {
+    notFound();
+  }
+  return productDetails;
+}
+
 export async function getProducts(searchQuery?: string) {
   'use cache';
   cacheLife('hours');
