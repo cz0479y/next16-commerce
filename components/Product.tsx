@@ -6,14 +6,13 @@ import Skeleton from './ui/Skeleton';
 
 type Props = {
   productId: number;
-  className?: string;
 };
 
-export default async function Product({ productId, className }: Props) {
+export default async function Product({ productId }: Props) {
   const product = await getProduct(productId);
 
   return (
-    <div className={cn('dark:bg-card-dark flex flex-col bg-white text-black', className)}>
+    <div className="dark:bg-card-dark flex flex-col bg-white text-black">
       <ProductImage />
       <div className="flex flex-1 flex-col p-4">
         <h2 className="mb-2 text-xl font-bold text-black dark:text-white">{product.name}</h2>

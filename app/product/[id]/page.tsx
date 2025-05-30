@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React, { Suspense } from 'react';
 import Product, { ProductSkeleton } from '@/components/Product';
 import Reviews, { ReviewsSkeleton } from '@/components/Reviews';
+import Card from '@/components/ui/Card';
 
 type Props = {
   params: Promise<{
@@ -19,12 +20,11 @@ export default async function ProductPage({ params }: Props) {
         {'<- Back to Home'}
       </Link>
       <div className="grid place-content-center gap-8">
-        <Suspense fallback={<ProductSkeleton />}>
-          <Product
-            className="border-divider dark:border-divider-dark dark:bg-card-dark rounded-lg border bg-white p-6 shadow-sm"
-            productId={productId}
-          />
-        </Suspense>
+        <Card>
+          <Suspense fallback={<ProductSkeleton />}>
+            <Product productId={productId} />
+          </Suspense>
+        </Card>
         <div>
           <h2 className="mb-4 text-xl font-semibold">Customer Reviews</h2>
           <Suspense fallback={<ReviewsSkeleton />}>
