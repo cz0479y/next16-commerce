@@ -15,7 +15,7 @@ export default async function ProductModal({ params }: Props) {
   return (
     <Modal goBackOnClose openModal={true} title="Quick Preview">
       <Suspense fallback={<ProductSkeleton />}>
-        <Product productId={productId} />
+        <Product imageClassName="h-60" productId={productId} />
       </Suspense>
       <div className="mt-6 flex justify-center">
         <a

@@ -6,15 +6,16 @@ import Skeleton from './ui/Skeleton';
 
 type Props = {
   productId: number;
+  imageClassName?: string;
   details?: React.ReactNode;
 };
 
-export default async function Product({ productId, details }: Props) {
+export default async function Product({ productId, details, imageClassName }: Props) {
   const product = await getProduct(productId);
 
   return (
     <div className="dark:bg-card-dark flex flex-col bg-white text-black">
-      <ProductImage />
+      <ProductImage className={imageClassName} />
       <div className="flex flex-1 flex-col p-4">
         <h2 className="mb-2 text-xl font-bold text-black dark:text-white">{product.name}</h2>
         {product.description && <p className="text-gray mb-4 flex-1 text-sm">{product.description}</p>}
@@ -30,7 +31,7 @@ export default async function Product({ productId, details }: Props) {
 export function ProductSkeleton({ className }: { className?: string }) {
   return (
     <div className={cn('dark:bg-card-dark flex flex-col bg-white', className)}>
-      <div className="bg-card dark:bg-section h-48 w-full" />
+      <div className="bg-card dark:bg-section h-24 w-full" />
       <Skeleton className="p-4" />
     </div>
   );
