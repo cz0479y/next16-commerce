@@ -14,8 +14,10 @@ export default function RootLayout({ children, modal }: { children: React.ReactN
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header />
-        {children}
+        <div className="flex flex-col gap-10 p-10">
+          <Header />
+          {children}
+        </div>
         {modal}
       </body>
     </html>

@@ -10,7 +10,7 @@ export default async function Product({ productId }: Props) {
 
   return (
     <div>
-      <h1>{product.name}</h1>
+      <h2>{product.name}</h2>
       <p>{product.description}</p>
       <p>Price: ${product.price}</p>
     </div>

@@ -5,9 +5,6 @@ const nextConfig: NextConfig = {
     inlineCss: true,
     ppr: true,
     reactCompiler: true,
-    staleTimes: {
-      dynamic: 30,
-    },
     useCache: true,
   },
 };
