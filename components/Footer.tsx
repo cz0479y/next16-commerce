@@ -19,7 +19,7 @@ export default async function Footer() {
             return (
               <Link
                 key={cat}
-                href={`/?category=${encodeURIComponent(cat)}`}
+                href="#"
                 className="text-gray dark:text-gray hover:text-primary block text-sm transition-colors"
               >
                 {cat}
