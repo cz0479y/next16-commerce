@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useTransition } from 'react';
+import React, { use, useTransition } from 'react';
 import { useAuth } from '@/modules/auth/components/AuthProvider';
 import { logOut, logIn } from '../auth-actions';
 
 export default function LoginButton() {
   const [isPending, startTransition] = useTransition();
   const { isAuthenticated } = useAuth();
+  const isAuth = use(isAuthenticated);
 
   return (
     <button
@@ -14,7 +15,7 @@ export default function LoginButton() {
       className="text-primary hover:text-primary-dark aria-disabled:text-gray cursor-pointer text-sm transition-colors aria-disabled:cursor-not-allowed aria-disabled:italic"
       onClick={() => {
         startTransition(async () => {
-          if (isAuthenticated) {
+          if (isAuth) {
             await logOut();
           } else {
             await logIn('jane.smith@work.com');
@@ -22,7 +23,7 @@ export default function LoginButton() {
         });
       }}
     >
-      {isPending ? (isAuthenticated ? 'Logging out...' : 'Logging in...') : isAuthenticated ? 'Log out' : 'Log in'}
+      {isPending ? (isAuth ? 'Logging out...' : 'Logging in...') : isAuth ? 'Log out' : 'Log in'}
     </button>
   );
 }

@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children, modal }: { children: React.ReactNode; modal: React.ReactNode }) {
-  const isAuthenticated = await getIsAuthenticated();
+  const isAuthenticated = getIsAuthenticated();
 
   return (
     <html lang="en">

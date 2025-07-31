@@ -6,6 +6,8 @@ import { prisma } from '@/db';
 import { slow } from '@/utils/slow';
 
 export const getIsAuthenticated = cache(async () => {
+  await slow();
+
   const selectedAccountId = (await cookies()).get('selectedAccountId')?.value;
   if (!selectedAccountId) {
     return false;

@@ -1,8 +1,8 @@
 import { ArrowUp, ArrowDown } from 'lucide-react';
 import Link from 'next/link';
 import React, { Suspense } from 'react';
-import DiscountBanner from '@/components/DiscountBanner';
 import Search from '@/components/Search';
+import { DiscountBanner } from '@/components/banner/Banner';
 import LinkStatus from '@/components/ui/LinkStatus';
 import ProductList, { ProductListSkeleton } from '@/modules/product/components/ProductList';
 
