@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Skeleton from '@/components/ui/Skeleton';
 import { getProductDetails } from '@/data/services/product';
 
 type Props = {
@@ -39,14 +39,9 @@ export default async function ProductDetails({ productId }: Props) {
 export function ProductDetailsSkeleton() {
   return (
     <div className="dark:bg-card-dark w-full rounded-lg bg-white p-4">
-      <div className="skeleton-animation mb-3 h-5 w-32 rounded-xs" />
-      <div className="space-y-2">
-        <div className="skeleton-animation h-4 w-full rounded-xs" />
-        <div className="skeleton-animation h-4 w-3/4 rounded-xs" />
-        <div className="skeleton-animation h-4 w-5/6 rounded-xs" />
-        <div className="skeleton-animation h-4 w-2/3 rounded-xs" />
-        <div className="skeleton-animation h-4 w-4/5 rounded-xs" />
-      </div>
+      <div className="skeleton-animation mb-3 h-6 w-32 rounded-xs" />
+      <Skeleton />
+      <div className="skeleton-animation mb-3 h-6 w-32 rounded-xs" />
     </div>
   );
 }
