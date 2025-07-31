@@ -11,8 +11,8 @@ import type { Metadata } from 'next';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  description: 'Next.js Commerce',
-  title: 'Next.js App Router Commerce',
+  description: 'Next.js 15 App Router Commerce',
+  title: 'Next 15 Commerce',
 };
 
 export default async function RootLayout({ children, modal }: { children: React.ReactNode; modal: React.ReactNode }) {
