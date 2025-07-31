@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import ProductImage from '@/components/ui/ProductImage';
+import ImagePlaceholder from '@/components/ui/ImagePlaceholder';
 import Skeleton from '@/components/ui/Skeleton';
 import { getProducts } from '../product-queries';
 
@@ -26,7 +26,7 @@ export default async function ProductList({ searchQuery, sort }: Props) {
             key={product.id}
             className="border-divider dark:border-divider-dark dark:bg-card-dark flex flex-row rounded-lg border bg-white transition-shadow hover:shadow-md"
           >
-            <ProductImage className="h-full w-24 sm:w-28" />
+            <ImagePlaceholder className="h-full w-24 sm:w-28" />
             <div className="flex flex-1 flex-col gap-2 p-4">
               <h2 className="group-hover:text-primary line-clamp-1 text-base font-semibold">{product.name}</h2>
               {product.description && (

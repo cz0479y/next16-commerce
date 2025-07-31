@@ -5,7 +5,7 @@ type Props = {
   className?: string;
 };
 
-export default function ProductImage({ className }: Props) {
+export default function ImagePlaceholder({ className }: Props) {
   return (
     <div className={cn('bg-card dark:bg-section flex h-96 w-full items-center justify-center', className)}>
       <svg

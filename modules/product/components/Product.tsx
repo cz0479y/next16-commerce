@@ -1,6 +1,6 @@
 import { cacheLife } from 'next/dist/server/use-cache/cache-life';
 import React from 'react';
-import ProductImage from '@/components/ui/ProductImage';
+import ImagePlaceholder from '@/components/ui/ImagePlaceholder';
 import Skeleton from '@/components/ui/Skeleton';
 import { cn } from '@/utils/cn';
 import { getProduct } from '../product-queries';
@@ -19,7 +19,7 @@ export default async function Product({ productId, details, imageClassName }: Pr
 
   return (
     <div className="dark:bg-card-dark flex flex-col bg-white text-black">
-      <ProductImage className={imageClassName} />
+      <ImagePlaceholder className={imageClassName} />
       <div className="flex flex-1 flex-col p-4">
         <h2 className="mb-2 text-xl font-bold text-black dark:text-white">{product.name}</h2>
         {product.description && <p className="text-gray mb-4 flex-1 text-sm">{product.description}</p>}
