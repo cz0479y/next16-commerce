@@ -43,7 +43,7 @@ export default function Modal({ openModal, children, goBackOnClose = false, titl
         <div className="border-divider dark:border-divider-dark flex justify-end border-t px-5 py-4">
           <button
             onClick={handleClose}
-            className="bg-card hover:bg-divider dark:bg-section dark:hover:bg-divider-dark cursor-pointer rounded-md px-4 py-2 font-medium text-black dark:text-white"
+            className="bg-card dark:bg-section rounded-md px-4 py-2 font-medium text-black dark:text-white"
           >
             Close
           </button>
