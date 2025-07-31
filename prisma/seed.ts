@@ -2,6 +2,25 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+const ACCOUNTS = [
+  {
+    email: 'jane.smith@gmail.com',
+    id: 'a833bc10-64dd-4069-8573-4bbb4b0065ed',
+    name: 'Jane Smith',
+  },
+  {
+    email: 'jane.smith@work.com',
+    id: '9e525f6f-b60e-4258-8c30-c289619525d6',
+    name: 'Jane Doe Smith',
+  },
+  {
+    email: 'janesmith85@hotmail.com',
+    id: 'd71ab200-18ed-4384-a4a7-a907bf169c9f',
+    inactive: true,
+    name: 'Jane S.',
+  },
+];
+
 const PRODUCTS = [
   {
     description: 'High-quality noise cancelling headphones with 20 hours battery life',
@@ -20,6 +39,60 @@ const PRODUCTS = [
     id: 3,
     name: 'Portable Speaker',
     price: 79.99,
+  },
+  {
+    description: 'Ergonomic wireless mouse with precision tracking',
+    id: 4,
+    name: 'Wireless Mouse',
+    price: 29.99,
+  },
+  {
+    description: 'Mechanical keyboard with RGB backlighting',
+    id: 5,
+    name: 'Gaming Keyboard',
+    price: 89.95,
+  },
+  {
+    description: 'Ultra-thin laptop stand with adjustable height',
+    id: 6,
+    name: 'Laptop Stand',
+    price: 39.99,
+  },
+  {
+    description: 'Fast wireless charger compatible with all Qi devices',
+    id: 7,
+    name: 'Wireless Charger',
+    price: 24.99,
+  },
+  {
+    description: 'HD webcam with auto-focus and noise reduction',
+    id: 8,
+    name: 'HD Webcam',
+    price: 59.99,
+  },
+  {
+    description: 'Portable power bank with 20,000mAh capacity',
+    id: 9,
+    name: 'Power Bank',
+    price: 49.95,
+  },
+  {
+    description: 'Smart home security camera with night vision',
+    id: 10,
+    name: 'Security Camera',
+    price: 129.99,
+  },
+  {
+    description: 'Premium coffee maker with programmable timer',
+    id: 11,
+    name: 'Coffee Maker',
+    price: 179.95,
+  },
+  {
+    description: 'Air purifier with HEPA filter for clean air',
+    id: 12,
+    name: 'Air Purifier',
+    price: 249.99,
   },
 ];
 
@@ -43,6 +116,51 @@ const REVIEWS = [
     comment: 'Good sound but not as loud as I expected.',
     productId: 3,
     rating: 3,
+  },
+  {
+    comment: 'Perfect mouse for daily use, very comfortable grip.',
+    productId: 4,
+    rating: 5,
+  },
+  {
+    comment: 'Great tactile feedback and the RGB looks amazing!',
+    productId: 5,
+    rating: 4,
+  },
+  {
+    comment: 'Sturdy build quality, perfect for my MacBook.',
+    productId: 6,
+    rating: 5,
+  },
+  {
+    comment: 'Charges my phone quickly, very convenient.',
+    productId: 7,
+    rating: 4,
+  },
+  {
+    comment: 'Crystal clear video quality for video calls.',
+    productId: 8,
+    rating: 5,
+  },
+  {
+    comment: 'Reliable power bank, charges my devices multiple times.',
+    productId: 9,
+    rating: 4,
+  },
+  {
+    comment: 'Easy setup and great night vision quality.',
+    productId: 10,
+    rating: 5,
+  },
+  {
+    comment: 'Makes excellent coffee, timer feature is very useful.',
+    productId: 11,
+    rating: 4,
+  },
+  {
+    comment: 'Noticeably cleaner air, quiet operation.',
+    productId: 12,
+    rating: 5,
   },
 ];
 
@@ -80,18 +198,147 @@ const PRODUCT_DETAILS = [
     warrantyInfo: '1 year limited warranty',
     weight: 0.6,
   },
+  {
+    brand: 'ErgoTech',
+    dimensions: '4.7 x 2.8 x 1.5 inches',
+    materials: 'ABS plastic, rubber grip',
+    origin: 'China',
+    productId: 4,
+    sku: 'WM-ERG400',
+    stockCount: 156,
+    warrantyInfo: '1 year limited warranty',
+    weight: 0.1,
+  },
+  {
+    brand: 'GamePro',
+    dimensions: '17.3 x 5.1 x 1.4 inches',
+    materials: 'Aluminum frame, mechanical switches',
+    origin: 'Taiwan',
+    productId: 5,
+    sku: 'KB-RGB500',
+    stockCount: 89,
+    warrantyInfo: '2 year limited warranty',
+    weight: 1.2,
+  },
+  {
+    brand: 'DeskMate',
+    dimensions: '10 x 9 x 6 inches',
+    materials: 'Aluminum alloy, silicone pads',
+    origin: 'USA',
+    productId: 6,
+    sku: 'LS-ADJ600',
+    stockCount: 67,
+    warrantyInfo: '1 year limited warranty',
+    weight: 0.8,
+  },
+  {
+    brand: 'ChargeFast',
+    dimensions: '4 x 4 x 0.4 inches',
+    materials: 'Tempered glass, aluminum',
+    origin: 'Korea',
+    productId: 7,
+    sku: 'WC-QI700',
+    stockCount: 234,
+    warrantyInfo: '1 year limited warranty',
+    weight: 0.2,
+  },
+  {
+    brand: 'StreamCam',
+    dimensions: '3.7 x 2.1 x 2.1 inches',
+    materials: 'Plastic housing, glass lens',
+    origin: 'China',
+    productId: 8,
+    sku: 'HD-CAM800',
+    stockCount: 123,
+    warrantyInfo: '1 year limited warranty',
+    weight: 0.15,
+  },
+  {
+    brand: 'PowerMax',
+    dimensions: '6.3 x 3 x 0.8 inches',
+    materials: 'Lithium polymer, ABS plastic',
+    origin: 'China',
+    productId: 9,
+    sku: 'PB-20K900',
+    stockCount: 178,
+    warrantyInfo: '1 year limited warranty',
+    weight: 0.45,
+  },
+  {
+    brand: 'SecureHome',
+    dimensions: '4.5 x 4.5 x 6.2 inches',
+    materials: 'Weather-resistant plastic, glass',
+    origin: 'Taiwan',
+    productId: 10,
+    sku: 'SC-NV1000',
+    stockCount: 56,
+    warrantyInfo: '2 year limited warranty',
+    weight: 0.35,
+  },
+  {
+    brand: 'BrewMaster',
+    dimensions: '12 x 8 x 14 inches',
+    materials: 'Stainless steel, glass carafe',
+    origin: 'Germany',
+    productId: 11,
+    sku: 'CM-PRO1100',
+    stockCount: 34,
+    warrantyInfo: '3 year limited warranty',
+    weight: 3.2,
+  },
+  {
+    brand: 'CleanAir',
+    dimensions: '16 x 8 x 20 inches',
+    materials: 'ABS plastic, HEPA filter',
+    origin: 'Sweden',
+    productId: 12,
+    sku: 'AP-HEPA1200',
+    stockCount: 45,
+    warrantyInfo: '2 year limited warranty',
+    weight: 4.8,
+  },
 ];
 
 async function seed() {
   await Promise.all(
+    ACCOUNTS.map(account => {
+      return prisma.account.upsert({
+        create: {
+          email: account.email,
+          id: account.id,
+          inactive: account.inactive,
+          name: account.name,
+        },
+        update: {
+          email: account.email,
+          inactive: account.inactive,
+          name: account.name,
+        },
+        where: { id: account.id },
+      });
+    }),
+  )
+    .then(() => {
+      return console.info('[SEED] Successfully create account records');
+    })
+    .catch(e => {
+      return console.error('[SEED] Failed to create account records', e);
+    });
+  await Promise.all(
     PRODUCTS.map(product => {
-      return prisma.product.create({
-        data: {
+      return prisma.product.upsert({
+        create: {
           description: product.description,
           id: product.id,
           name: product.name,
           price: product.price,
         },
+        update: {
+          description: product.description,
+          name: product.name,
+          price: product.price,
+        },
+        where: { id: product.id },
       });
     }),
   )
@@ -122,8 +369,8 @@ async function seed() {
 
   await Promise.all(
     PRODUCT_DETAILS.map(detail => {
-      return prisma.productDetail.create({
-        data: {
+      return prisma.productDetail.upsert({
+        create: {
           brand: detail.brand,
           dimensions: detail.dimensions,
           materials: detail.materials,
@@ -134,6 +381,17 @@ async function seed() {
           warrantyInfo: detail.warrantyInfo,
           weight: detail.weight,
         },
+        update: {
+          brand: detail.brand,
+          dimensions: detail.dimensions,
+          materials: detail.materials,
+          origin: detail.origin,
+          sku: detail.sku,
+          stockCount: detail.stockCount,
+          warrantyInfo: detail.warrantyInfo,
+          weight: detail.weight,
+        },
+        where: { productId: detail.productId },
       });
     }),
   )

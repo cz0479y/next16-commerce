@@ -1,3 +1,4 @@
+import { Star } from 'lucide-react';
 import React from 'react';
 import { getReviews } from '@/data/services/review';
 import Skeleton from './ui/Skeleton';
@@ -25,13 +26,11 @@ export default async function Reviews({ productId }: Props) {
                   <div className="flex">
                     {[...Array(5)].map((_, i) => {
                       return (
-                        <span
+                        <Star
                           key={i}
-                          className={`text-lg ${i < review.rating ? 'text-yellow-400' : 'text-gray'}`}
+                          className={`h-4 w-4 ${i < review.rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray'}`}
                           aria-hidden="true"
-                        >
-                          ★
-                        </span>
+                        />
                       );
                     })}
                   </div>

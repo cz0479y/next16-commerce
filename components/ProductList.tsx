@@ -7,13 +7,14 @@ import Skeleton from './ui/Skeleton';
 
 type Props = {
   searchQuery?: string;
+  sort?: 'asc' | 'desc';
 };
 
-export default async function ProductList({ searchQuery }: Props) {
+export default async function ProductList({ searchQuery, sort }: Props) {
   'use cache';
   cacheLife('hours');
 
-  const products = await getProducts(searchQuery);
+  const products = await getProducts(searchQuery, sort);
   const hasProducts = products.length > 0;
 
   if (!hasProducts) {

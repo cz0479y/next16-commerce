@@ -1,7 +1,11 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
-
 import Link from 'next/link';
+import { Suspense } from 'react';
+import Footer from '@/components/Footer';
+import UserProfile, { UserProfileSkeleton } from '@/components/UserProfile';
+import { getIsAuthenticated } from '@/data/services/auth';
+import { AuthProvider } from './providers/AuthProvider';
 import type { Metadata } from 'next';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -11,21 +15,29 @@ export const metadata: Metadata = {
   title: 'Next.js App Router Commerce',
 };
 
-export default function RootLayout({ children, modal }: { children: React.ReactNode; modal: React.ReactNode }) {
+export default async function RootLayout({ children, modal }: { children: React.ReactNode; modal: React.ReactNode }) {
+  const isAuthenticated = await getIsAuthenticated();
+
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="mb-8 flex flex-col gap-10 p-4 sm:p-10">
-          <header className="border-divider dark:border-divider-dark border-b bg-white py-4 dark:bg-black">
-            <h1 className="text-3xl font-bold">
-              <Link href="/" className="text-primary hover:text-primary-dark">
-                Commerce
-              </Link>
-            </h1>
-          </header>
-          {children}
-        </div>
-        {modal}
+        <AuthProvider isAuthenticated={isAuthenticated}>
+          <div className="flex min-h-screen flex-col">
+            <header className="border-divider dark:border-divider-dark flex min-h-20 items-center justify-between border-b bg-white px-4 py-4 sm:px-10 2xl:px-60 dark:bg-black">
+              <h1 className="text-3xl font-bold">
+                <Link href="/" className="text-primary hover:text-primary-dark">
+                  Commerce
+                </Link>
+              </h1>
+              <Suspense fallback={<UserProfileSkeleton />}>
+                <UserProfile />
+              </Suspense>
+            </header>
+            <main className="flex flex-1 flex-col gap-10 p-4 pb-8 sm:p-10 sm:pb-8 2xl:px-60">{children}</main>
+            <Footer />
+          </div>
+          {modal}
+        </AuthProvider>
       </body>
     </html>
   );

@@ -29,12 +29,12 @@ export async function getProductDetails(productId: number) {
   return productDetails;
 }
 
-export async function getProducts(searchQuery?: string) {
+export async function getProducts(searchQuery?: string, sort?: 'asc' | 'desc') {
   await slow();
 
   return prisma.product.findMany({
     orderBy: {
-      name: 'asc',
+      name: sort === 'asc' ? 'asc' : 'desc',
     },
     where: {
       name: {

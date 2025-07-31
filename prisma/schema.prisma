@@ -11,6 +11,14 @@ datasource db {
   // shadowDatabaseUrl = env("SHADOW_DATABASE_URL") // For sqlserver, remove with sqlite and postgres
 }
 
+model Account {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  name      String
+  email     String
+  inactive  Boolean  @default(false)
+}
+
 model Product {
   id            Int            @id @default(autoincrement())
   name          String
