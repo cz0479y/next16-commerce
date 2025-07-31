@@ -11,7 +11,7 @@ import type { Metadata } from 'next';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  description: 'Next.js App Router Commerce',
+  description: 'Next.js Commerce',
   title: 'Next.js App Router Commerce',
 };
 
