@@ -340,10 +340,21 @@ const SAVED_PRODUCTS = [
 ];
 
 async function seed() {
+  // Delete all existing data in the correct order (respecting foreign key constraints)
+  console.info('[SEED] Deleting existing data...');
+  await prisma.savedProduct.deleteMany({});
+  await prisma.review.deleteMany({});
+  await prisma.productDetail.deleteMany({});
+  await prisma.product.deleteMany({});
+  await prisma.accountDetail.deleteMany({});
+  await prisma.account.deleteMany({});
+  console.info('[SEED] Successfully deleted existing data');
+
+  // Create accounts
   await Promise.all(
     ACCOUNTS.map(account => {
-      return prisma.account.upsert({
-        create: {
+      return prisma.account.create({
+        data: {
           address: account.address,
           birthDate: account.birthDate,
           city: account.city,
@@ -356,19 +367,6 @@ async function seed() {
           phone: account.phone,
           zipCode: account.zipCode,
         },
-        update: {
-          address: account.address,
-          birthDate: account.birthDate,
-          city: account.city,
-          country: account.country,
-          email: account.email,
-          firstName: account.firstName,
-          lastName: account.lastName,
-          name: account.name,
-          phone: account.phone,
-          zipCode: account.zipCode,
-        },
-        where: { id: account.id },
       });
     }),
   )
@@ -379,10 +377,11 @@ async function seed() {
       return console.error('[SEED] Failed to create account records', e);
     });
 
+  // Create account details
   await Promise.all(
     ACCOUNT_DETAILS.map(detail => {
-      return prisma.accountDetail.upsert({
-        create: {
+      return prisma.accountDetail.create({
+        data: {
           accountId: detail.accountId,
           language: detail.language,
           newsletter: detail.newsletter,
@@ -390,14 +389,6 @@ async function seed() {
           theme: detail.theme,
           timezone: detail.timezone,
         },
-        update: {
-          language: detail.language,
-          newsletter: detail.newsletter,
-          notifications: detail.notifications,
-          theme: detail.theme,
-          timezone: detail.timezone,
-        },
-        where: { accountId: detail.accountId },
       });
     }),
   )
@@ -408,23 +399,17 @@ async function seed() {
       return console.error('[SEED] Failed to create account details records', e);
     });
 
+  // Create products
   await Promise.all(
     PRODUCTS.map(product => {
-      return prisma.product.upsert({
-        create: {
+      return prisma.product.create({
+        data: {
           category: product.category,
           description: product.description,
           id: product.id,
           name: product.name,
           price: product.price,
         },
-        update: {
-          category: product.category,
-          description: product.description,
-          name: product.name,
-          price: product.price,
-        },
-        where: { id: product.id },
       });
     }),
   )
@@ -435,6 +420,7 @@ async function seed() {
       console.error('[SEED] Failed to create product records', e);
     });
 
+  // Create reviews
   await Promise.all(
     REVIEWS.map(review => {
       return prisma.review.create({
@@ -453,10 +439,11 @@ async function seed() {
       console.error('[SEED] Failed to create review records', e);
     });
 
+  // Create product details
   await Promise.all(
     PRODUCT_DETAILS.map(detail => {
-      return prisma.productDetail.upsert({
-        create: {
+      return prisma.productDetail.create({
+        data: {
           brand: detail.brand,
           dimensions: detail.dimensions,
           materials: detail.materials,
@@ -467,17 +454,6 @@ async function seed() {
           warrantyInfo: detail.warrantyInfo,
           weight: detail.weight,
         },
-        update: {
-          brand: detail.brand,
-          dimensions: detail.dimensions,
-          materials: detail.materials,
-          origin: detail.origin,
-          sku: detail.sku,
-          stockCount: detail.stockCount,
-          warrantyInfo: detail.warrantyInfo,
-          weight: detail.weight,
-        },
-        where: { productId: detail.productId },
       });
     }),
   )
@@ -488,19 +464,13 @@ async function seed() {
       console.error('[SEED] Failed to create product details records', e);
     });
 
+  // Create saved products
   await Promise.all(
     SAVED_PRODUCTS.map(savedProduct => {
-      return prisma.savedProduct.upsert({
-        create: {
+      return prisma.savedProduct.create({
+        data: {
           accountId: savedProduct.accountId,
           productId: savedProduct.productId,
-        },
-        update: {},
-        where: {
-          accountId_productId: {
-            accountId: savedProduct.accountId,
-            productId: savedProduct.productId,
-          },
         },
       });
     }),

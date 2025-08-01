@@ -45,7 +45,7 @@ export const getProducts = cache(async (searchQuery?: string, sort?: 'asc' | 'de
   const [products, total] = await Promise.all([
     prisma.product.findMany({
       orderBy: {
-        name: sort === 'asc' ? 'asc' : 'desc',
+        name: sort === 'desc' ? 'desc' : 'asc',
       },
       skip,
       take: limit,
