@@ -22,6 +22,7 @@ export default function Pagination({
       },
     };
   };
+
   return (
     <div className="flex items-center gap-2">
       {currentPage > 1 && (

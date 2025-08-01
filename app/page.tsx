@@ -2,42 +2,43 @@ import { ArrowUp, ArrowDown } from 'lucide-react';
 import Link from 'next/link';
 import React, { Suspense } from 'react';
 import Search from '@/components/Search';
-
 import { DiscountBanner } from '@/components/banner/Banner';
 import LinkStatus from '@/components/ui/LinkStatus';
 import ProductList, { ProductListSkeleton } from '@/modules/product/components/ProductList';
 
 type Props = {
-  searchParams: Promise<{
-    page?: string;
-    q: string;
-    sort?: 'asc' | 'desc';
-  }>;
+  searchParams: Promise<SearchParams>;
+};
+
+export type SearchParams = {
+  page?: string;
+  q: string;
+  sort?: 'asc' | 'desc';
 };
 
 export default async function RootPage({ searchParams }: Props) {
-  const { q, sort, page } = await searchParams;
-  const currentPage = page ? parseInt(page, 10) : 1;
-
   return (
     <>
       <DiscountBanner />
       <Search />
       <div className="flex h-full grow flex-col gap-4">
-        <SortButton sort={sort} searchQuery={q} />
+        <Suspense fallback={<SortButtonSkeleton />}>
+          <SortButton searchParams={searchParams} />
+        </Suspense>
         <Suspense fallback={<ProductListSkeleton />}>
-          <ProductList searchQuery={q} sort={sort} page={currentPage} />
+          <ProductList searchParams={searchParams} />
         </Suspense>
       </div>
     </>
   );
 }
 
-function SortButton({ sort, searchQuery }: { sort?: 'asc' | 'desc'; searchQuery?: string; page?: string }) {
+async function SortButton({ searchParams }: { searchParams: Promise<SearchParams> }) {
+  const { sort, q } = await searchParams;
   const nextSort = sort === 'asc' ? 'desc' : 'asc';
 
   const queryParams = {
-    ...(searchQuery && { q: searchQuery }),
+    ...(q && { q }),
     sort: nextSort,
   };
 
@@ -54,4 +55,8 @@ function SortButton({ sort, searchQuery }: { sort?: 'asc' | 'desc'; searchQuery?
       </LinkStatus>
     </Link>
   );
+}
+
+function SortButtonSkeleton() {
+  return <div className="h-10 w-24 rounded bg-gray-200 dark:bg-gray-700" />;
 }
