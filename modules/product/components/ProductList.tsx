@@ -1,15 +1,18 @@
 import Link from 'next/link';
 import React from 'react';
-import type { SearchParams } from '@/app/page';
 import Pagination from '@/components/Pagination';
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder';
 import Skeleton from '@/components/ui/Skeleton';
 import { getProducts } from '../product-queries';
 
-export default async function ProductList({ searchParams }: { searchParams: Promise<SearchParams> }) {
-  const { page, q, sort } = await searchParams;
-  const pageNumber = page ? parseInt(page, 10) : 1;
-  const { products, totalPages, currentPage } = await getProducts(q, sort, pageNumber);
+type Props = {
+  page?: number;
+  searchQuery?: string;
+  sort?: 'asc' | 'desc';
+};
+
+export default async function ProductList({ searchQuery, sort, page = 1 }: Props) {
+  const { products, totalPages, currentPage } = await getProducts(searchQuery, sort, page);
   const hasProducts = products.length > 0;
 
   if (!hasProducts) {
@@ -40,7 +43,7 @@ export default async function ProductList({ searchParams }: { searchParams: Prom
       </div>
       {totalPages > 1 && (
         <div className="flex justify-center">
-          <Pagination currentPage={currentPage} totalPages={totalPages} searchQuery={q} sort={sort} />
+          <Pagination currentPage={currentPage} totalPages={totalPages} searchQuery={searchQuery} sort={sort} />
         </div>
       )}
     </div>
