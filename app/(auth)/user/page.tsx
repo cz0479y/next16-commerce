@@ -3,6 +3,7 @@ import { unauthorized } from 'next/navigation';
 import React, { Suspense } from 'react';
 import { getCurrentAccountWithDetails } from '@/modules/auth/auth-queries';
 import SavedProducts, { SavedProductsSkeleton } from '@/modules/product/components/SavedProducts';
+import Discounts from '@/modules/user/Discounts';
 
 function PreferenceItem({ label, value }: { label: string; value: string }) {
   return (
@@ -87,6 +88,10 @@ export default async function UserPage() {
             <PreferenceItem label="Birth Date" value={new Date(account.birthDate).toLocaleDateString()} />
           </div>
         )}
+      </div>
+      <div>
+        <h2 className="mb-4 text-xl font-semibold">Your Discounts</h2>
+        <Discounts />
       </div>
       <div>
         <h2 className="mb-4 text-xl font-semibold">Saved Products</h2>

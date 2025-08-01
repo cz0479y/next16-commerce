@@ -15,7 +15,7 @@ export async function PersonalBanner() {
       </p>
       <div className="mt-3">
         <Link
-          href="#"
+          href="/user"
           className="text-primary hover:text-primary-dark inline-block text-sm font-medium transition-colors"
         >
           View Discounts

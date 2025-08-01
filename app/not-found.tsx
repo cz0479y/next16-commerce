@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col items-center justify-center rounded-lg p-8 text-center">
+    <div className="flex flex-col items-center justify-center rounded-lg px-20 py-80 text-center">
       <h1 className="text-primary text-6xl font-bold">404</h1>
       <p className="mt-4 text-xl font-semibold">Page Not Found</p>
       <p className="text-gray dark:text-gray mt-4 max-w-md">

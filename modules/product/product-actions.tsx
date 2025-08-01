@@ -14,7 +14,7 @@ async function saveProduct(productId: number) {
     },
   });
 
-  revalidatePath('/profile');
+  revalidatePath('/user');
   revalidatePath('/product/' + productId);
 }
 
@@ -30,7 +30,7 @@ async function unsaveProduct(productId: number) {
     },
   });
 
-  revalidatePath('/profile');
+  revalidatePath('/user');
   revalidatePath('/product/' + productId);
 }
 

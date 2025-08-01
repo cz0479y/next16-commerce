@@ -3,7 +3,7 @@ import React, { Suspense } from 'react';
 import Header from '@/components/Header';
 import { getIsAuthenticated } from '@/modules/auth/auth-queries';
 import { AuthProvider } from '@/modules/auth/components/AuthProvider';
-import UserProfile, { UserProfileSkeleton } from '@/modules/auth/components/UserProfile';
+import UserProfile, { UserProfileSkeleton } from '@/modules/user/UserProfile';
 
 export default async function AuthLayout({ children, modal }: { children: React.ReactNode; modal: React.ReactNode }) {
   const isAuthenticated = getIsAuthenticated();

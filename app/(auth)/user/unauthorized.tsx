@@ -8,7 +8,7 @@ export default async function Unauthorized() {
   const isAuthenticated = await getIsAuthenticated();
 
   if (isAuthenticated) {
-    redirect('/profile');
+    redirect('/user');
   }
 
   return (

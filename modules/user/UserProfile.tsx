@@ -1,8 +1,8 @@
 import { User } from 'lucide-react';
 import Link from 'next/link';
 import React, { Suspense } from 'react';
-import { getCurrentAccount } from '../auth-queries';
-import LoginButton from './LoginButton';
+import { getCurrentAccount } from '../auth/auth-queries';
+import LoginButton from '../auth/components/LoginButton';
 
 export default async function UserProfile() {
   const account = await getCurrentAccount();
@@ -15,7 +15,7 @@ export default async function UserProfile() {
           <LoginButton />
         </Suspense>
       </div>
-      <Link href="/profile">
+      <Link href="/user">
         <span className="sr-only">Go to Profile</span>
         <User
           aria-hidden
