@@ -10,18 +10,22 @@ export default async function UserProfile() {
   return (
     <div className="flex items-center gap-2">
       <div className="flex flex-col items-end gap-1">
-        <span className="text-sm">{account?.name}</span>
+        {account && <span className="text-sm">{account.name}</span>}
         <Suspense>
           <LoginButton />
         </Suspense>
       </div>
-      <Link href="/user" prefetch>
-        <span className="sr-only">Go to Profile</span>
-        <User
-          aria-hidden
-          className="text-primary hover:text-primary-dark size-8 cursor-pointer rounded-full p-1 transition-all hover:bg-gray-100 dark:hover:bg-gray-800"
-        />
-      </Link>
+      {account ? (
+        <Link href="/user" prefetch>
+          <span className="sr-only">Go to Profile</span>
+          <User
+            aria-hidden
+            className="text-primary hover:text-primary-dark size-8 cursor-pointer rounded-full p-1 transition-all hover:bg-gray-100 dark:hover:bg-gray-800"
+          />
+        </Link>
+      ) : (
+        <User aria-hidden className="text-gray size-8 rounded-full p-1" />
+      )}
     </div>
   );
 }
