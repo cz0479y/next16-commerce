@@ -1,6 +1,8 @@
 import React from 'react';
 import AppLayout from '@/components/AppLayout';
 import Card from '@/components/ui/Card';
+import SubmitButton from '@/components/ui/SubmitButton';
+import { SignUpORedirect } from '@/modules/auth/auth-actions';
 
 export default function AboutPage() {
   return (
@@ -11,6 +13,13 @@ export default function AboutPage() {
             <h1 className="text-4xl font-bold text-black dark:text-white">About Our Store</h1>
             <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">Welcome to our modern e-commerce experience</p>
           </div>
+
+          <div className="text-center">
+            <form action={SignUpORedirect}>
+              <SubmitButton>Start Shopping</SubmitButton>
+            </form>
+          </div>
+
           <div className="grid gap-8 md:grid-cols-2">
             <Card>
               <h2 className="mb-4 text-xl font-semibold text-black dark:text-white">Our Mission</h2>

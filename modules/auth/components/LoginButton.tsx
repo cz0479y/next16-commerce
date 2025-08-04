@@ -4,7 +4,7 @@ import React, { use, useTransition } from 'react';
 import { useAuth } from '@/modules/auth/components/AuthProvider';
 import { logOut, logIn } from '../auth-actions';
 
-export default function LoginButton() {
+export default function LoginButton({ redirect }: { redirect?: string }) {
   const [isPending, startTransition] = useTransition();
   const { isAuthenticated } = useAuth();
   const isAuth = use(isAuthenticated);
@@ -18,7 +18,14 @@ export default function LoginButton() {
           if (isAuth) {
             await logOut();
           } else {
-            await logIn('jane.smith@gmail.com');
+            await logIn(
+              'jane.smith@gmail.com',
+              redirect
+                ? {
+                    redirect,
+                  }
+                : undefined,
+            );
           }
         });
       }}
