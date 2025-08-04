@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   experimental: {
     authInterrupts: true,
     inlineCss: true,
+    ppr: true,
     reactCompiler: true,
     staleTimes: {
       dynamic: 30,
