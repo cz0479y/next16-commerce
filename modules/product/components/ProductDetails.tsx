@@ -10,8 +10,8 @@ type Props = {
   productId: number;
 };
 
-export function prefetchProductDetails(productId: number) {
-  return getProductDetails(productId);
+export function preloadProductDetails(productId: number) {
+  void getProductDetails(productId);
 }
 
 export default async function ProductDetails({ productId }: Props) {

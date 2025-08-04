@@ -5,7 +5,7 @@ import React, { Suspense } from 'react';
 import Card from '@/components/ui/Card';
 import Product, { ProductSkeleton } from '@/modules/product/components/Product';
 import ProductDetails, {
-  prefetchProductDetails,
+  preloadProductDetails,
   ProductDetailsSkeleton,
 } from '@/modules/product/components/ProductDetails';
 import Reviews, { ReviewsSkeleton } from '@/modules/product/components/Reviews';
@@ -19,7 +19,7 @@ type Props = {
 export default async function ProductPage({ params }: Props) {
   const { id } = await params;
   const productId = Number(id);
-  prefetchProductDetails(productId);
+  preloadProductDetails(productId);
 
   return (
     <div className="flex flex-col gap-6">
