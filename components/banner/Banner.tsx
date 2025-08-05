@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Suspense } from 'react';
-import { getIsAuthenticated } from '@/modules/auth/auth-queries';
+import { getCurrentAccount, getIsAuthenticated } from '@/modules/auth/auth-queries';
 import { slow } from '@/utils/slow';
 import { BannerContainer } from './BannerContainer';
 
@@ -9,11 +9,13 @@ export async function PersonalBanner() {
   const isAuthenticated = await getIsAuthenticated();
   if (!isAuthenticated) return <GeneralBanner />;
 
+  const account = await getCurrentAccount();
+
   return (
     <>
       <h3 className="text-primary mb-2 text-lg font-semibold">Your Exclusive Discounts</h3>
       <p className="mb-3 text-sm text-gray-700 dark:text-gray-300">
-        Check out your personalized offers and exclusive member discounts.
+        Welcome back, {account?.firstName}! Check out your personalized offers and exclusive member discounts.
       </p>
       <div className="mt-3">
         <Link
@@ -43,16 +45,10 @@ export default function GeneralBanner() {
 
 export function DiscountBanner() {
   return (
-    <Suspense
-      fallback={
-        <BannerContainer>
-          <GeneralBanner />
-        </BannerContainer>
-      }
-    >
-      <BannerContainer>
+    <BannerContainer>
+      <Suspense fallback={<GeneralBanner />}>
         <PersonalBanner />
-      </BannerContainer>
-    </Suspense>
+      </Suspense>
+    </BannerContainer>
   );
 }
