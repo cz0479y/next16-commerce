@@ -24,7 +24,7 @@ export default async function UserPage() {
 
   return (
     <div className="flex flex-col gap-16 xl:mx-40 2xl:mx-60">
-      <Boundary rendering="dynamic">
+      <Boundary rendering="dynamic" hydration="server">
         <div className="border-divider dark:border-divider-dark flex flex-col gap-6 rounded-lg border p-8">
           <div className="flex items-center gap-4">
             <User className="text-primary size-16 rounded-full bg-gray-100 p-3 dark:bg-gray-800" />
@@ -98,17 +98,13 @@ export default async function UserPage() {
       <div>
         <h2 className="mb-4 text-xl font-semibold">Your Discounts</h2>
         <Suspense fallback={<DiscountsSkeleton />}>
-          <Boundary rendering="dynamic">
-            <Discounts />
-          </Boundary>
+          <Discounts />
         </Suspense>
       </div>
       <div>
         <h2 className="mb-4 text-xl font-semibold">Saved Products</h2>
         <Suspense fallback={<SavedProductsSkeleton />}>
-          <Boundary rendering="dynamic">
-            <SavedProducts />
-          </Boundary>
+          <SavedProducts />
         </Suspense>
       </div>
     </div>
