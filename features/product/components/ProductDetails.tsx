@@ -16,7 +16,7 @@ export function preloadProductDetails(productId: number) {
 
 export default async function ProductDetails({ productId }: Props) {
   const productDetails = await getProductDetails(productId);
-  const isAuthenticated = await getIsAuthenticated();
+  const loggedIn = await getIsAuthenticated();
 
   return (
     <div className="w-full rounded-lg p-4">
@@ -40,7 +40,7 @@ export default async function ProductDetails({ productId }: Props) {
       </div>
 
       <div className="border-divider dark:border-divider-dark mt-6 border-t pt-4">
-        {isAuthenticated ? (
+        {loggedIn ? (
           <Suspense fallback={<Bookmark aria-hidden className="text-gray size-5" />}>
             <SavedProduct productId={productId} />
           </Suspense>

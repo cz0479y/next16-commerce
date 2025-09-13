@@ -7,8 +7,8 @@ import { BannerContainer } from './BannerContainer';
 
 export async function PersonalBanner() {
   await slow();
-  const isAuthenticated = await getIsAuthenticated();
-  if (!isAuthenticated) return <GeneralBanner />;
+  const loggedIn = await getIsAuthenticated();
+  if (!loggedIn) return <GeneralBanner />;
 
   const account = await getCurrentAccount();
   const discounts = await getUserDiscounts();

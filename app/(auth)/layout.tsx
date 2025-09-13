@@ -5,10 +5,10 @@ import { AuthProvider } from '@/features/auth/components/AuthProvider';
 import UserProfile, { UserProfileSkeleton } from '@/features/user/components/UserProfile';
 
 export default async function AuthLayout({ children, modal }: LayoutProps<'/'>) {
-  const isAuthenticated = getIsAuthenticated();
+  const loggedIn = getIsAuthenticated();
 
   return (
-    <AuthProvider isAuthenticated={isAuthenticated}>
+    <AuthProvider loggedIn={loggedIn}>
       <AppLayout headerContent={<Suspense fallback={<UserProfileSkeleton />}>{<UserProfile />}</Suspense>}>
         {children}
         {modal}

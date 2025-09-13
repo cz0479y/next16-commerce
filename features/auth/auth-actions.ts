@@ -22,7 +22,7 @@ export const verifyAuth = cache(async (redirectUrl?: string) => {
   return user.id;
 });
 
-export async function signOut() {
+export async function logOut() {
   await slow();
 
   (await cookies()).delete('selectedAccountId');
@@ -30,7 +30,7 @@ export async function signOut() {
   revalidatePath('/');
 }
 
-export async function signIn(email: string, redirectUrl?: Route | URL) {
+export async function logIn(email: string, redirectUrl?: Route | URL) {
   await slow();
 
   const account = await prisma.account.findFirst({
@@ -48,9 +48,9 @@ export async function signIn(email: string, redirectUrl?: Route | URL) {
 }
 
 export async function signInORedirect() {
-  const isAuthenticated = await getIsAuthenticated();
+  const loggedIn = await getIsAuthenticated();
 
-  if (isAuthenticated) {
+  if (loggedIn) {
     redirect('/');
   } else {
     redirect('/sign-in');
