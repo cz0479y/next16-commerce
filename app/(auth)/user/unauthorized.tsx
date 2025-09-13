@@ -1,16 +1,8 @@
 import { Lock } from 'lucide-react';
-import { redirect } from 'next/navigation';
 import React, { Suspense } from 'react';
-import { getIsAuthenticated } from '@/features/auth/auth-queries';
 import LoginButton from '@/features/auth/components/LoginButton';
 
 export default async function Unauthorized() {
-  const isAuthenticated = await getIsAuthenticated();
-
-  if (isAuthenticated) {
-    redirect('/user');
-  }
-
   return (
     <div className="flex flex-col items-center justify-center rounded-lg p-8 text-center">
       <Lock className="text-primary mb-4 size-16" />
