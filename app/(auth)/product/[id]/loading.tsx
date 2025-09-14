@@ -6,7 +6,7 @@ import { ReviewsSkeleton } from '@/features/product/components/Reviews';
 export default function Loading() {
   return (
     <div className="flex flex-col gap-6">
-      <div className="skeleton-animation h-6 w-24 rounded" />
+      <div className="skeleton-animation h-4 w-24 rounded" />
       <div className="flex w-full flex-col gap-8 self-center md:w-[700px]">
         <Card>
           <ProductSkeleton isDetails />
