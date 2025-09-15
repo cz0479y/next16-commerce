@@ -43,7 +43,7 @@
   }
   
   input {
-    @apply w-full rounded-none border border-divider bg-white px-3 py-2 text-sm tracking-wide text-black placeholder-gray focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none dark:border-divider-dark dark:bg-card-dark dark:text-white dark:placeholder-gray;
+    @apply w-full border border-divider bg-white px-3 py-2 text-sm tracking-wide text-black placeholder-gray focus:border-accent focus:ring-1 focus:ring-accent focus:outline-none dark:border-divider-dark dark:bg-card-dark dark:text-white dark:placeholder-gray;
   }
   
   label {

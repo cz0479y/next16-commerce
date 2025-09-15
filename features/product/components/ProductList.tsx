@@ -31,7 +31,7 @@ export default async function ProductList({ searchQuery, sort, page = 1 }: Props
                 href={`/product/${product.id}`}
                 key={product.id}
                 prefetch={shouldPrefetch}
-                className="group border-divider hover:border-accent dark:border-divider-dark dark:hover:border-accent flex flex-row rounded-none border bg-white transition-all hover:shadow-md dark:bg-black"
+                className="group border-divider hover:border-accent dark:border-divider-dark dark:hover:border-accent flex flex-row border bg-white transition-all hover:shadow-md dark:bg-black"
               >
                 <ImagePlaceholder className="h-full w-24 sm:w-28" />
                 <div className="flex flex-1 flex-col gap-2 p-5">

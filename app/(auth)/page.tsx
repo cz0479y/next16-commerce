@@ -50,9 +50,9 @@ function SortButton({ sort, searchQuery }: { sort?: 'asc' | 'desc'; searchQuery?
         <LinkStatus>
           <div className="flex items-center gap-2">
             {nextSort === 'desc' ? (
-              <ArrowUp className="bg-accent size-3.5 rounded-none p-0.5 text-white dark:text-black" />
+              <ArrowUp className="bg-accent size-3.5 p-0.5 text-white dark:text-black" />
             ) : (
-              <ArrowDown className="bg-accent size-3.5 rounded-none p-0.5 text-white dark:text-black" />
+              <ArrowDown className="bg-accent size-3.5 p-0.5 text-white dark:text-black" />
             )}
             Sort {nextSort === 'desc' ? 'A-Z' : 'Z-A'}
           </div>

@@ -23,7 +23,7 @@ export default async function Product({ productId, details, imageClassName }: Pr
 
   return (
     <Boundary rendering="hybrid" hydration="server">
-      <div className="border-divider dark:border-divider-dark dark:bg-card-dark flex flex-col rounded-none border bg-white">
+      <div className="border-divider dark:border-divider-dark dark:bg-card-dark flex flex-col border bg-white">
         <ImagePlaceholder className={imageClassName} />
         <div className="flex flex-1 flex-col p-5">
           <h2 className="mb-3 text-xl font-bold tracking-tight">{product.name}</h2>
