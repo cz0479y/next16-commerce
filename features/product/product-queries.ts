@@ -41,8 +41,6 @@ export const getProductDetails = cache(async (productId: number) => {
 
 export const getProducts = cache(
   async (searchQuery?: string, sort?: 'asc' | 'desc', page = 1, limit = 9, category?: string) => {
-    await slow(500);
-
     const skip = (page - 1) * limit;
 
     const whereClause = {
@@ -131,21 +129,6 @@ export const getFeaturedProducts = cache(async (limit = 4) => {
   const products = await prisma.product.findMany({
     orderBy: { createdAt: 'desc' },
     take: limit,
-  });
-
-  return products;
-});
-
-export const getProductsByCategory = cache(async (category: string, limit = 4) => {
-  const products = await prisma.product.findMany({
-    orderBy: { createdAt: 'desc' },
-    take: limit,
-    where: {
-      category: {
-        equals: category,
-        mode: 'insensitive',
-      },
-    },
   });
 
   return products;
