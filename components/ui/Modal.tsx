@@ -18,6 +18,7 @@ export default function Modal({ openModal, children, goBackOnClose = false, titl
 
   const handleClose = () => {
     ref.current?.close();
+    document.body.style.overflow = 'unset';
     if (goBackOnClose) {
       router.back();
     }
@@ -26,7 +27,14 @@ export default function Modal({ openModal, children, goBackOnClose = false, titl
   useEffect(() => {
     if (openModal) {
       ref.current?.showModal();
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
     }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
   }, [openModal]);
 
   return (
