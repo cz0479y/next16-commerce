@@ -94,7 +94,7 @@ export const getProducts = cache(
 );
 
 export const getReviews = cache(async (productId: number) => {
-  await slow(100000);
+  await slow();
 
   return prisma.review.findMany({
     orderBy: { createdAt: 'desc' },
