@@ -1,6 +1,5 @@
 import { Bookmark } from 'lucide-react';
-import { cacheLife } from 'next/dist/server/use-cache/cache-life';
-import { cacheTag } from 'next/dist/server/use-cache/cache-tag';
+
 import React from 'react';
 import Boundary from '@/components/internal/Boundary';
 import Button from '@/components/ui/Button';
@@ -21,10 +20,10 @@ export function preloadProductDetails(productId: number) {
 }
 
 export default async function ProductDetails({ productId, children }: Props) {
-  'use cache: remote';
+  // 'use cache: remote';
 
-  cacheLife('max');
-  cacheTag('product-' + productId);
+  // cacheLife('max');
+  // cacheTag('product-' + productId);
 
   const productDetails = await getProductDetails(productId);
   const setFeaturedForProduct = setFeaturedProduct.bind(null, productId);
@@ -81,11 +80,11 @@ export async function SavedProduct({ productId }: { productId: number }) {
 export function ProductDetailsSkeleton() {
   return (
     <div className="border-divider dark:border-divider-dark w-full rounded-sm border bg-white p-5 dark:bg-black">
-      <div className="skeleton-animation mt-2 mb-4 h-10 w-40 rounded-sm" />
+      <div className="skeleton-animation mt-2 mb-4 h-[46px] w-40 rounded-sm" />
       <Skeleton />
       <div className="skeleton-animation mb-4 h-6 w-38" />
       <div className="mt-6">
-        <div className="border-divider dark:border-divider-dark mb-4 border-b border-dotted" />
+        <Divider variant="dotted" className="mb-4" />
         <Bookmark aria-hidden className="text-gray size-5" />
       </div>
     </div>
