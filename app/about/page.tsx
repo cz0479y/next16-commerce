@@ -6,7 +6,7 @@ import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
 import Divider from '@/components/ui/Divider';
 import LinkButton from '@/components/ui/LinkButton';
-import { signInORedirect } from '@/features/auth/auth-actions';
+import { signInOrRedirect } from '@/features/auth/auth-actions';
 
 export default function AboutPage() {
   return (
@@ -23,7 +23,7 @@ export default function AboutPage() {
               Your trusted partner for cutting-edge technology and exceptional service.
             </p>
             <Boundary rendering="static">
-              <form action={signInORedirect}>
+              <form action={signInOrRedirect}>
                 <Button variant="primary" title="Start Shopping">
                   Start Shopping <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -87,8 +87,8 @@ export default function AboutPage() {
                 Quality products, exceptional service, and customer satisfaction are the pillars of our business.
               </p>
               <div className="flex flex-col gap-4 sm:flex-row">
-                <LinkButton title="Browse Products" link="/all" variant="primary" />
-                <LinkButton title="Contact Support" link="/user" variant="secondary" />
+                <LinkButton title="Browse Products" href="/all" variant="primary" />
+                <LinkButton title="Contact Support" href="/user" variant="secondary" />
               </div>
             </div>
           </div>

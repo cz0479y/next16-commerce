@@ -8,7 +8,7 @@ import { slow } from '@/utils/slow';
 import { getCurrentAccount, getIsAuthenticated } from './auth-queries';
 import type { Route } from 'next';
 
-export const verifyAuth = cache(async (redirectUrl?: Route | URL) => {
+export const verifyAuth = cache(async (redirectUrl?: Route) => {
   const user = await getCurrentAccount();
   if (!user) {
     if (redirectUrl) {
@@ -29,7 +29,7 @@ export async function logOut() {
   redirect('/');
 }
 
-export async function logIn(email: string, redirectUrl?: Route | URL) {
+export async function logIn(email: string, redirectUrl?: Route) {
   await slow();
 
   const account = await prisma.account.findFirst({
@@ -46,7 +46,7 @@ export async function logIn(email: string, redirectUrl?: Route | URL) {
   redirect((redirectUrl || '/') as Route);
 }
 
-export async function signInORedirect() {
+export async function signInOrRedirect() {
   const loggedIn = await getIsAuthenticated();
 
   if (loggedIn) {

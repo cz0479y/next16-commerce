@@ -62,25 +62,25 @@ export default async function HomePage() {
           <PromoBanner
             title="Membership Benefits"
             subtitle="Join our exclusive club for special discounts, early access, and premium support."
-            link="/sign-in"
+            href={loggedIn ? '/user' : '/sign-in'}
             bgColor="bg-accent/10 dark:bg-accent/20"
           />
           <PromoBanner
             title="Trade-In Program"
             subtitle="Upgrade your devices and get credit towards your next purchase."
-            link="/about"
+            href="/about"
             bgColor="bg-black/5 dark:bg-white/10"
           />
         </section>
         <section>
           <h2 className="mb-4 text-2xl font-bold tracking-tight uppercase">Quick Links</h2>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-6">
-            <LinkButton title="Price Match" link="/about" />
-            <LinkButton title="Support" link="/about" />
-            <LinkButton title="Free Delivery" link="/about" />
-            <LinkButton title="My Account" link="/user" />
-            <LinkButton title="Returns" link="/about" />
-            <LinkButton title="Gift Cards" link="/about" />
+            <LinkButton title="Price Match" href="/about" />
+            <LinkButton title="Support" href="/about" />
+            <LinkButton title="Free Delivery" href="/about" />
+            <LinkButton title="My Account" href="/user" />
+            <LinkButton title="Returns" href="/about" />
+            <LinkButton title="Gift Cards" href="/about" />
           </div>
         </section>
       </Boundary>
@@ -91,19 +91,19 @@ export default async function HomePage() {
 function PromoBanner({
   title,
   subtitle,
-  link,
+  href,
   bgColor,
 }: {
   title: string;
   subtitle: string;
-  link: Route | URL;
+  href?: Route;
   bgColor: string;
 }) {
   return (
     <div className={`${bgColor} border-divider dark:border-divider-dark border p-6`}>
       <h3 className="mb-2 text-xl font-bold tracking-tight uppercase">{title}</h3>
       <p className="mb-4 text-sm">{subtitle}</p>
-      <LinkButton title="Learn More" link={link} variant="primary" />
+      <LinkButton scroll title="Learn More" href={href!} variant="primary" />
     </div>
   );
 }

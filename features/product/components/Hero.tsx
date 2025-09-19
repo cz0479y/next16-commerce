@@ -34,10 +34,10 @@ export default async function Hero() {
           <div className="flex flex-wrap gap-4">
             <LinkButton
               title={heroProduct ? 'View Product' : 'Shop Now'}
-              link={heroProduct ? (`/product/${heroProduct.id}` as Route) : ('/product/1' as Route)}
+              href={heroProduct ? (`/product/${heroProduct.id}` as Route) : ('/product/1' as Route)}
               variant="primary"
             />
-            <LinkButton title="Browse All" link="/all" variant="secondary" />
+            <LinkButton title="Browse All" href="/all" variant="secondary" />
           </div>
         </div>
         <div className="relative flex items-center justify-center overflow-hidden">
