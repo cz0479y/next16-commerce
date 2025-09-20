@@ -75,7 +75,7 @@ function SortButton({
       <Link
         scroll={false}
         href={{ pathname: '/all', query: queryParams }}
-        className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wide uppercase"
+        className="inline-flex h-6 items-center gap-1.5 text-xs font-bold tracking-wide uppercase"
       >
         <LinkStatus>
           <div className="flex items-center gap-2">
