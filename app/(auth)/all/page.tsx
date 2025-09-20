@@ -5,7 +5,6 @@ import Boundary from '@/components/internal/Boundary';
 import LinkStatus from '@/components/ui/LinkStatus';
 import CategoryFilters, { CategoryFiltersSkeleton } from '@/features/category/components/CategoryFilters';
 import ProductList, { ProductListSkeleton } from '@/features/product/components/ProductList';
-import { slow } from '@/utils/slow';
 
 type SearchParams = {
   page?: string;
@@ -15,7 +14,6 @@ type SearchParams = {
 };
 
 export default async function AllPage({ searchParams }: PageProps<'/'>) {
-  await slow(10000);
   const { q, sort, page, category } = (await searchParams) as SearchParams;
   const currentPage = page ? parseInt(page, 10) : 1;
 
