@@ -1,6 +1,6 @@
 import { ProductSkeleton } from '@/features/product/components/Product';
 
-export default async function ProductModal() {
+export default function Loading() {
   return (
     <>
       <ProductSkeleton />
