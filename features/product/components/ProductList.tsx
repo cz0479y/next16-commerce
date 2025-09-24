@@ -56,13 +56,7 @@ export default async function ProductList({ searchParams }: Props) {
         </div>
         {totalPages > 1 && (
           <div className="flex justify-center">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              searchQuery={q}
-              sort={sort}
-              category={category}
-            />
+            <Pagination currentPage={currentPage} totalPages={totalPages} />
           </div>
         )}
       </div>
