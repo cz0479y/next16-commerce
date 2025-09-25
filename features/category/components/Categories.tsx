@@ -7,7 +7,7 @@ export default async function Categories() {
 
   return (
     <Boundary>
-      <div>
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
         {categories.map(category => {
           return (
             <Boundary key={category} hydration="server">
@@ -16,8 +16,10 @@ export default async function Categories() {
                   pathname: '/all',
                   query: { category },
                 }}
-                className="text-gray dark:text-gray hover:text-primary block text-sm transition-colors"
-              />
+                className="hover:text-accent dark:hover:text-accent block text-sm text-gray-700 transition-colors dark:text-gray-300"
+              >
+                {category}
+              </Link>
             </Boundary>
           );
         })}
@@ -31,7 +33,7 @@ export function CategoriesSkeleton() {
     <div>
       <div className="mb-4 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
         {Array.from({ length: 5 }).map((_, index) => {
-          return <div key={index} className="h-5 w-full rounded bg-gray-200 dark:bg-gray-700" />;
+          return <div key={index} className="skeleton-animation h-5 w-full rounded" />;
         })}
         <div className="mb-1 h-5 w-full" />
       </div>
