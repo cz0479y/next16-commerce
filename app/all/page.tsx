@@ -1,14 +1,17 @@
 import { Search } from 'lucide-react';
 import React, { Suspense } from 'react';
 
+import { SearchSkeleton } from '@/components/Search';
 import SortButton, { SortButtonSkeleton } from '@/components/SortButton';
 import CategoryFilters, { CategoryFiltersSkeleton } from '@/features/category/components/CategoryFilters';
-import ProductList from '@/features/product/components/ProductList';
+import ProductList, { ProductListSkeleton } from '@/features/product/components/ProductList';
 
 export default async function AllPage({ searchParams }: PageProps<'/'>) {
   return (
     <>
-      <Search />
+      <Suspense fallback={<SearchSkeleton />}>
+        <Search />
+      </Suspense>
       <div className="flex h-full grow gap-12">
         <div className="hidden w-64 flex-shrink-0 lg:block">
           <div className="sticky top-4">
@@ -34,7 +37,9 @@ export default async function AllPage({ searchParams }: PageProps<'/'>) {
               <SortButton />
             </Suspense>
           </div>
-          <ProductList searchParams={searchParams} />
+          <Suspense fallback={<ProductListSkeleton />}>
+            <ProductList searchParams={searchParams} />
+          </Suspense>
         </div>
       </div>
     </>
