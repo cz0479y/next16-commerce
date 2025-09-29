@@ -3,7 +3,7 @@ import Boundary from '@/components/internal/Boundary';
 import ProductCard from '@/components/ui/ProductCard';
 import { getFeaturedProducts } from '../product-queries';
 
-export default async function FeaturedProductsSection() {
+export default async function FeaturedProducts() {
   'use cache';
 
   cacheTag('featured-product');
