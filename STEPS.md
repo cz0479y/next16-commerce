@@ -28,7 +28,7 @@
 - This user route is actually only accessible when logged in. Let's say we want to handle an unauthorized attempt here in a different way. This is a general error, will trigger this view on any error. Let's enable authInterrupts and create a custom error boundary. There is also a version of forbidden. Use this either in data access or components.
 - How about excessive prop passing. It's a very common problem. For exampke, getting the logged in state of a user on the server and passing it to the client.
 - Showcase my user profile. Passing props. We likely need this loggedIn state all the time.
-- Add authprovider. Awaiting this would block the inital load. Let's pass it as a promise down, keep it as a promise in the provider, then read it with use. LoginButton is now composable again.
+- Add authprovider. Let's pass it as a promise down, keep it as a promise in the provider. LoginButton is now composable again. Spoiler: we'll get back to this component.
 - Many purposes, any server state you want to share. Just remember to not pass secrets.
 
 ## Client/server Composition
@@ -84,6 +84,7 @@
 
 - Now, everything here that's marked as hybrid can be cached. It's async and fetching something, but it does not depend on dynamic APIs.
 - Enable cache components. This will opt all our async calls into dynamic calls, and also give us errors whenever a dynamic API does not have a suspense boundary.
+- We have an error right away! The authprovider... Theres no way to fix this without lots of refactor. I suppose we remove this pattern. OR! Let's not await this, and read it with use() inside components. As long as it's suspended, no issue! Like params.
 - Add "use cache" and cacheTag to the categories. Now it's fast on both about and home, we can remove this suspense boundary and skeleton. Worry less about millions of skeletons.
 - One cache key linked to components, no hassle revalidating many different pages.
 - No longer page level static/dynamic. And every cached segment will be a part of the statically generated shell from Partial Prerendering, and can also be prefetched for even faster navigations, cached on the CDN. That's why pushing my searchParams down like this will give me the biggest PPR shell.
