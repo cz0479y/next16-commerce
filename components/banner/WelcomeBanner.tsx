@@ -33,7 +33,12 @@ export function WelcomeBanner({ loggedIn }: { loggedIn: boolean }) {
 }
 
 export function PersonalBanner() {
-  const { data } = useSWR('/api/user-data', fetcher, { suspense: true });
+  const { data, isLoading } = useSWR('/api/user-data', fetcher);
+
+  if (isLoading) {
+    return <GeneralBanner />;
+  }
+
   const { account, discounts, savedProducts } = data;
   const featuredDiscount = discounts[0];
   const firstName = account?.firstName || account?.name.split(' ')[0];
