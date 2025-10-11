@@ -6,6 +6,7 @@
 - I have all my pages here. I'm using feature slicing to keep the app router folder clean and easy to read. Could also use the underscore components. Services and queries talking to my db.
 - Demo app. Ecommerce mimic. Everything here looks pretty decent. Home page, browse page, login page, about page, profile page. Pretty good overall.
 - Also using typed routes to get these page props and type safe links.
+- This is a regular next.js codebase, nothing fancy, however, keep in mind we have a pretty good mix of static and dynamic content.
 - Let's say the team here has reported issues with architecture and prop drilling, excessive client side JS, and need help utilizing static generation and caching.
 - The goal here is to improve this regular Next.js codebase and enhance it with modern patterns, regarding architecture, composition, and caching capabilities, to make it faster, more scalable, and easier to maintain.
 - Improvements based on my exp building with server comp also and other codebases I have seen, and what devs commonly do wrong or struggle to find solutions for.
@@ -15,6 +16,7 @@
 - Team reported issues with architecture and excessive prop drilling, making it hard to maintain and refactor features. Let's check out the home page. Maybe we tried to be smart and share this to make the page faster.
 - I'm noticing some issues. Fetching auth state top level, passing down to multiple components, conditional rendering. This is a common problem, making our components less reusable and composable.
 - We don't need to fetch top level with server components. We can fetch inside components,and then utilize react cache() to avoid duplicate calls. Refactor to fetch inside components, improve structure. If using fetch it's auto deduped.
+- Lot's of login deps. Extract this to components handling their own responsibilities.
 - Let's see another example, this all products page. Here, tried to be smart to avoid duplicate calls. But now, CategoryFilters are tied to this page, and the loading state responsibility is on the page.
 - Big skeleton code, reusable skeletons but still, no content shown. CategoryFilters has a redundant dependency.
 - Call getCategories inside the CategoryFilters component, add react cache() deduping, not a problem.
@@ -88,18 +90,18 @@
 - We have an error right away! The authprovider... Theres no way to fix this without lots of refactor. I suppose we remove this pattern. OR! Let's not await this, and read it with use() inside components. As long as it's suspended, no issue! Like params.
 - Add "use cache" and cacheTag to the categories. Now it's fast on both about and home, we can remove this suspense boundary and skeleton. Worry less about millions of skeletons.
 - One cache key linked to components, no hassle revalidating many different pages.
-- No longer page level static/dynamic. And every cached segment will be a part of the statically generated shell from Partial Prerendering, and can also be prefetched for even faster navigations, cached on the CDN. That's why pushing my searchParams down like this will give me the biggest PPR shell.
-- That's why my pattern in the home page is good for both composition and PPR.
+- No longer page level static/dynamic.
+- That's why my pattern in the home page is good for both composition and PPR. I already refactored it alot, and it's making it alot easier for me.
 - Add "use cache" to the category filters. Error, search params resolving too high: don't, or use client comps! Need to create a bigger static shell. Remove suspense.
 - Add "use cache" to all hybrid components after the home refactor. Hero, FeaturedProducts, FeaturedCategories. Now they're all fast. Remove suspense.
 - Add use cache to the Reviews, with cacheLife seconds. Keep the suspense.
-- PPR goes down as far as the cache goes, until it meets a dynamic API.
+- And every cached segment will be a part of the statically generated shell from Partial Prerendering, and can also be prefetched for even faster navigations, cached on the CDN. PPR goes down as far as the cache goes, until it meets a dynamic API. That's why pushing my searchParams down like this will give me the biggest PPR shell.
 - For the Product, it's inside params, so it can't be static. But, we can still use generateStaticParams. Add an example generateStaticParams.
 - And also use "use cache: remote" to cache it between requests to avoid some server load. Inside dynamic API, we still need to add suspense.
 - Can only use cache async functions, but since we already did the donut here it’s not a problem for the modal.
 - Try add use cache to the ProductDetails. It fails, exposing our dynamic API. Why? We have a dynamic dep. This is also useful for debugging btw. Mark it as dynamic, and slot the dynamic dep.
 - Then, error again! Actually, there is no suspense here, and we would be blocking our entire page! Add suspense.
-- Let's do some cache gymnastics. Weave in dynamic data. Same as donut pattern, let's slot this. Composable caching. This is whats happening all over our app with pages and layouts.
+- Let's do some cache gymnastics. Weave in dynamic data. Same as donut pattern, let's slot this. Composable caching. This is whats happening all over our app with pages and layouts. We could also cache the data, but this is a showcase.
 - Still, warning. Every await is now dynamic. The user saved product gives us the suspense warning. This error is caused because my cookies are not suspended. At least now I'll now I wont be blocking any pages. A common problem is not knowing why your app feels slow, with cacheComponents, we will be notified where we need a suspense boundary.
 - We could continue this across the whole app, not changing anything in our component tree and structure.
 - Our authProvider does not make it dynamic as long as the components using it are suspended, just like searchParams!
