@@ -14,7 +14,7 @@ export default async function Categories() {
 
   return (
     <Boundary rendering="hybrid" cached>
-      <ShowMore initial={5}>
+      <ShowMore className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5" initial={5}>
         {categories.map(category => {
           return (
             <Boundary key={category} hydration="server">
