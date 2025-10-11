@@ -41,6 +41,8 @@ export const getProductDetails = cache(async (productId: number) => {
 
 export const getProducts = cache(
   async (searchQuery?: string, sort?: 'asc' | 'desc', page = 1, limit = 9, category?: string) => {
+    await slow();
+
     const skip = (page - 1) * limit;
 
     const whereClause: {

@@ -1,11 +1,13 @@
 import React, { Suspense } from 'react';
 import Search, { SearchSkeleton } from '@/components/Search';
 import SortButton, { SortButtonSkeleton } from '@/components/SortButton';
-import CategoryFilters, { CategoryFiltersSkeleton } from '@/features/category/components/CategoryFilters';
-import ProductList, { ProductListSkeleton } from '@/features/product/components/ProductList';
+import { getCategories } from '@/features/category/category-queries';
+import CategoryFilters from '@/features/category/components/CategoryFilters';
+import ProductList from '@/features/product/components/ProductList';
 
 export default async function AllPage({ searchParams }: PageProps<'/'>) {
   const resolvedSearchParams = await searchParams;
+  const categories = await getCategories();
 
   return (
     <>
@@ -16,16 +18,12 @@ export default async function AllPage({ searchParams }: PageProps<'/'>) {
         <div className="hidden w-64 flex-shrink-0 lg:block">
           <div className="sticky top-4">
             <h3 className="mb-5 text-lg font-bold tracking-tight uppercase">Categories</h3>
-            <Suspense fallback={<CategoryFiltersSkeleton />}>
-              <CategoryFilters />
-            </Suspense>
+            <CategoryFilters categories={categories} />
           </div>
         </div>
         <div className="flex flex-1 flex-col gap-6">
           <div className="flex flex-col gap-4 lg:hidden">
-            <Suspense fallback={<CategoryFiltersSkeleton />}>
-              <CategoryFilters />
-            </Suspense>
+            <CategoryFilters categories={categories} />
             <div className="flex justify-end">
               <Suspense fallback={<SortButtonSkeleton />}>
                 <SortButton />
@@ -37,9 +35,7 @@ export default async function AllPage({ searchParams }: PageProps<'/'>) {
               <SortButton />
             </Suspense>
           </div>
-          <Suspense fallback={<ProductListSkeleton />}>
-            <ProductList searchParams={resolvedSearchParams} />
-          </Suspense>
+          <ProductList searchParams={resolvedSearchParams} />
         </div>
       </div>
     </>
