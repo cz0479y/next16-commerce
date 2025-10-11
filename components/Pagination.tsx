@@ -1,70 +1,104 @@
 'use client';
 
+import { LoaderCircle } from 'lucide-react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
-import Boundary from './internal/Boundary';
-import LinkStatus from './ui/LinkStatus';
+import { useRouter } from 'next/navigation';
+import { useTransition } from 'react';
+import type { SearchParams } from '@/features/product/components/ProductList';
 
-export default function Pagination({ currentPage, totalPages }: { currentPage: number; totalPages: number }) {
-  const searchParams = useSearchParams();
-  const searchQuery = searchParams.get('q');
-  const sort = searchParams.get('sort') as 'asc' | 'desc' | null;
-  const category = searchParams.get('category');
+export default function Pagination({
+  currentPage,
+  totalPages,
+  searchParams,
+}: {
+  currentPage: number;
+  totalPages: number;
+  searchParams: SearchParams;
+}) {
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const createPageUrl = (page: number) => {
+    const query: Record<string, string> = {};
+    Object.entries(searchParams).forEach(([key, value]) => {
+      if (key !== 'page' && value) {
+        query[key] = value.toString();
+      }
+    });
+    if (page > 1) {
+      query.page = page.toString();
+    }
     return {
       pathname: '/all',
-      query: {
-        ...(searchQuery && { q: searchQuery }),
-        ...(sort && { sort }),
-        ...(category && { category }),
-        ...(page > 1 && { page: page.toString() }),
-      },
+      query,
     };
   };
 
+  const navigateToPage = (page: number) => {
+    const params = new URLSearchParams();
+    Object.entries(searchParams).forEach(([key, value]) => {
+      if (key !== 'page' && value) params.set(key, value.toString());
+    });
+    if (page > 1) params.set('page', page.toString());
+    router.push(`/all?${params.toString()}`);
+  };
+
   return (
-    <Boundary>
-      <div className="flex items-center gap-2">
-        {currentPage > 1 && (
-          <Link
-            scroll={false}
-            href={createPageUrl(currentPage - 1)}
-            className="inline-flex items-center px-3 py-2 text-sm font-medium"
-          >
-            <LinkStatus>Previous</LinkStatus>
-          </Link>
-        )}
-        <div className="flex items-center gap-1">
-          {Array.from({ length: totalPages }, (_, i) => {
-            return i + 1;
-          }).map(page => {
-            return (
-              <Link scroll={false} key={page} href={createPageUrl(page)}>
-                <LinkStatus
-                  className={`inline-flex items-center px-3 py-2 text-sm font-medium ${
-                    page === currentPage
-                      ? 'bg-primary text-white dark:text-black'
-                      : 'text-primary hover:text-primary-dark'
-                  }`}
-                  variant="background"
-                >
-                  {page}
-                </LinkStatus>
-              </Link>
-            );
-          })}
-        </div>
-        {currentPage < totalPages && (
-          <Link
-            scroll={false}
-            href={createPageUrl(currentPage + 1)}
-            className="inline-flex items-center px-3 py-2 text-sm font-medium"
-          >
-            <LinkStatus>Next</LinkStatus>
-          </Link>
-        )}
+    <div className="flex items-center gap-2">
+      {currentPage > 1 && (
+        <Link
+          onClick={e => {
+            e.preventDefault();
+            startTransition(() => {
+              navigateToPage(currentPage - 1);
+            });
+          }}
+          scroll={false}
+          href={createPageUrl(currentPage - 1)}
+          className="inline-flex items-center px-3 py-2 text-sm font-medium"
+        >
+          Previous
+        </Link>
+      )}
+      <div className="flex items-center gap-1">
+        {Array.from({ length: totalPages }, (_, i) => {
+          return i + 1;
+        }).map(page => {
+          return (
+            <Link scroll={false} key={page} href={createPageUrl(page)}>
+              <div
+                className={`inline-flex items-center px-3 py-2 text-sm font-medium ${
+                  page === currentPage
+                    ? 'bg-primary text-white dark:text-black'
+                    : 'text-primary hover:text-primary-dark'
+                }`}
+              >
+                {page}
+              </div>
+            </Link>
+          );
+        })}
       </div>
-    </Boundary>
+      {currentPage < totalPages && (
+        <Link
+          onClick={e => {
+            e.preventDefault();
+            startTransition(() => {
+              navigateToPage(currentPage + 1);
+            });
+          }}
+          scroll={false}
+          href={createPageUrl(currentPage + 1)}
+          className="inline-flex items-center px-3 py-2 text-sm font-medium"
+        >
+          Next
+        </Link>
+      )}
+      {isPending && (
+        <div className="text-gray h-fit w-fit animate-spin">
+          <LoaderCircle aria-hidden="true" width={20} height={20} />
+        </div>
+      )}
+    </div>
   );
 }

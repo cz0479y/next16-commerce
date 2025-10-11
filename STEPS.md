@@ -27,15 +27,15 @@
 
 ## Excessive client JS -> Client/Server composition: WelcomeBanner
 
-- Another reported issue is excessive client side JS. Let's check out this banner.
+- Another reported issue is excessive client side JS.
+- Check out this Pagination. Client side due to link status. Switch to new LinkStatus API.
 - Begin with this Banner. It's dismissing this with a useState(), and it has a motion.div animation. Switched to client side fetching with useSWR to make this interactive.
-- However, we break seperation of concerns by involving UI logic with data. Instead, let's utilize the donut pattern to make a client component wrapper, BannerContainer.
+- However, we break separation of concerns by involving UI logic with data. Instead, let's utilize the donut pattern to make a client component wrapper, BannerContainer.
 - Delete API layer, no longer needed.
 - See in devtools only the container is client.
 - By the way, using this pattern with a boundary provider. Wrap a boundary here so we can mark this as client. Hard code "hydration". See the links as well client. Mark as client.
 - For the motion.div, this simple animation is now forcing the entire banner to be client. Let's move this to a MotionWrapper component, that can be reused for other animations.
 - Compositional power, WelcomeBanner can be added anywhere. Add to /all page.
-- For component that don't rely on server logic and neither on client js, let's mark them hybrid. Pagination.
 - What if we want a modal for our products? Mark product as server. Relies on server stuff and is async. We can utilize for example the modal pattern with intercepting routes, or pass the content as props.
 - Add snippet passing down server component into a ProductModal. Mark modal as client.
 - The compositional power of server components, Product is passed into this modal, handles its own data.
