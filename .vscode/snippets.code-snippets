@@ -14,19 +14,6 @@
             "}"
         ],
     },
-    "quickPreview": {
-        "scope": "typescriptreact",
-        "prefix": "quickPreview",
-        "body": [
-            "if (enableQuickPreview) {",
-            "  return (",
-            "    <div className=\"group relative h-full\">",
-            "      {card}",
-            "    </div>",
-            "  );",
-            "}"
-        ]
-    },
     "generateStaticParams": {
         "scope": "typescriptreact",
         "prefix": "generateStaticParams",
