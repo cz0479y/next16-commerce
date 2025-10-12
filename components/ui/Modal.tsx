@@ -25,7 +25,7 @@ export default function Modal({ open, setOpen, children, goBackOnClose = false, 
   };
 
   return (
-    <Boundary>
+    <Boundary hydration="client">
       <Dialog
         open={open}
         onClose={handleClose}

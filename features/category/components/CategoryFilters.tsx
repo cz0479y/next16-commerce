@@ -4,7 +4,7 @@ import CategoryFilterButton from './CategoryFilterButton';
 
 export default async function CategoryFilters({ categories }: { categories: string[] }) {
   return (
-    <Boundary hydration="server">
+    <Boundary>
       <div className="flex flex-wrap gap-2 lg:flex-col lg:gap-1">
         <Suspense fallback={<CategoryFilterButtonSkeleton />}>
           <CategoryFilterButton>All</CategoryFilterButton>

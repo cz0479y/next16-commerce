@@ -15,7 +15,7 @@ export default async function Product({ productId, details, imageClassName }: Pr
   const product = await getProduct(productId);
 
   return (
-    <Boundary>
+    <Boundary hydration="server" rendering="hybrid">
       <div className="flex flex-col bg-white dark:bg-black">
         <ImagePlaceholder className={imageClassName} />
         <div className="flex flex-1 flex-col p-5">

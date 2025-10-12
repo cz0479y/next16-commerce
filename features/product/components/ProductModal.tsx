@@ -15,7 +15,7 @@ export default function ProductModal({ productId, children }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Boundary>
+    <Boundary hydration="client">
       <button
         onClick={() => {
           setIsOpen(true);

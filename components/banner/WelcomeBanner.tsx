@@ -8,7 +8,7 @@ import useSWR from 'swr';
 import { fetcher } from '@/utils/fetcher';
 import Boundary from '../internal/Boundary';
 
-export function WelcomeBanner({ loggedIn }: { loggedIn: boolean }) {
+export default function WelcomeBanner({ loggedIn }: { loggedIn: boolean }) {
   const [dismissed, setDismissed] = useState(false);
   if (dismissed) return null;
 
@@ -16,7 +16,9 @@ export function WelcomeBanner({ loggedIn }: { loggedIn: boolean }) {
     <Boundary>
       <div className="border-divider dark:border-divider-dark from-accent/5 via-accent/3 dark:from-accent/10 dark:via-accent/5 relative border bg-gradient-to-tr to-transparent p-0 dark:to-transparent">
         <div className="flex items-start justify-between gap-3 p-3 sm:gap-4 sm:p-5">
-          <div className="flex-1">{loggedIn ? <PersonalBanner /> : <GeneralBanner />}</div>
+          <div className="flex-1">
+            <PersonalBanner loggedIn={loggedIn} />
+          </div>
           <button
             onClick={() => {
               setDismissed(true);
@@ -32,10 +34,10 @@ export function WelcomeBanner({ loggedIn }: { loggedIn: boolean }) {
   );
 }
 
-export function PersonalBanner() {
+export function PersonalBanner({ loggedIn }: { loggedIn: boolean }) {
   const { data, isLoading } = useSWR('/api/user-data', fetcher);
 
-  if (isLoading) {
+  if (isLoading || !loggedIn) {
     return <GeneralBanner />;
   }
 

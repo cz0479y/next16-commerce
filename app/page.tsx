@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Suspense } from 'react';
-import { WelcomeBanner } from '@/components/banner/WelcomeBanner';
+import WelcomeBanner from '@/components/banner/WelcomeBanner';
 import Boundary from '@/components/internal/Boundary';
 import LinkButton from '@/components/ui/LinkButton';
 import { getIsAuthenticated } from '@/features/auth/auth-queries';
@@ -107,7 +107,7 @@ async function PersonalizedSection() {
 function ProductsHeader() {
   return (
     <Suspense fallback={<GeneralProductsHeader />}>
-      <Boundary rendering="dynamic">
+      <Boundary>
         <PersonalProductsHeader />
       </Boundary>
     </Suspense>
@@ -128,7 +128,7 @@ function GeneralProductsHeader() {
 function PromoBanner() {
   return (
     <Suspense fallback={<GeneralPromoBanner />}>
-      <Boundary rendering="dynamic">
+      <Boundary>
         <PersonalPromoBanner />
       </Boundary>
     </Suspense>
