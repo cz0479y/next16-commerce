@@ -9,6 +9,7 @@
 - This is a regular next.js codebase, nothing fancy, however, keep in mind we have a pretty good mix of static and dynamic content.
 - Let's say the team here has reported issues with architecture and prop drilling, excessive client side JS, and need help utilizing static generation and caching.
 - The goal here is to improve this regular Next.js codebase and enhance it with modern patterns, regarding architecture, composition, and caching capabilities, to make it faster, more scalable, and easier to maintain.
+- Purposefully added slowness to my data fetching.
 - Improvements based on my exp building with server comp also and other codebases I have seen, and what devs commonly do wrong or struggle to find solutions for.
 
 ## Excessive prop drilling -> component level fetching and authProvider: app/page.tsx
@@ -114,6 +115,7 @@
 - See all boundaries, cached stuff.
 - Again, every cached segment will be a part of the statically generated shell from Partial Prerendering.
 - On client side navs, it can also be prefetched for even faster navigations. Only in deployed that prefetching is enabled. Params are already known for the entire page. It's so fast!
+- Remember i have purposefully added slows, and i didn't optimize my db. Very simple nextjs app.
 - We don't see the params of the product on client side navs, because they're already known. We see them only on the initial load here, after that the remote cache handles it.
 - Show revalidation working with cacheTag.
 - Follow best practices and it should all just work out the box, giving you max performance.
