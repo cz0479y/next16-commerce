@@ -39,7 +39,7 @@ export default async function HomePage() {
               Unlock exclusive perks like extra discounts, early product launches, and priority support. Sign in to
               access your dashboard and discover new offers!
             </p>
-            <PromoBanner />
+            <MembershipTile />
           </div>
           <div className="border-divider dark:border-divider-dark border bg-black/5 p-6 dark:bg-white/10">
             <h3 className="mb-2 text-xl font-bold tracking-tight uppercase">Trade-In Program</h3>
@@ -113,19 +113,19 @@ function GeneralProductsHeader() {
   return <h2 className="text-xl font-bold tracking-tight uppercase sm:text-2xl">Featured Products</h2>;
 }
 
-function PromoBanner() {
+function MembershipTile() {
   return (
-    <Suspense fallback={<GeneralPromoBanner />}>
-      <Boundary rendering="dynamic">
-        <PersonalPromoBanner />
+    <Suspense fallback={<GeneralMembershipTile />}>
+      <Boundary>
+        <PersonalMembershipTile />
       </Boundary>
     </Suspense>
   );
 }
 
-async function PersonalPromoBanner() {
+async function PersonalMembershipTile() {
   const loggedIn = await getIsAuthenticated();
-  if (!loggedIn) return <GeneralPromoBanner />;
+  if (!loggedIn) return <GeneralMembershipTile />;
 
   return (
     <LinkButton href="/user" variant="primary">
@@ -134,7 +134,7 @@ async function PersonalPromoBanner() {
   );
 }
 
-function GeneralPromoBanner() {
+function GeneralMembershipTile() {
   return (
     <LinkButton href="/sign-in" variant="primary">
       Sign In to Join
