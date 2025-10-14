@@ -14,7 +14,7 @@ export default async function UserProfile() {
       <div className="flex items-center gap-2">
         <div className="flex flex-col items-end gap-1">
           {account && <span className="text-sm font-medium tracking-wide">{account.name}</span>}
-          <LoginButton isLoggedIn={loggedIn} />
+          <LoginButton loggedIn={loggedIn} />
         </div>
         {account ? (
           <Link href="/user">
