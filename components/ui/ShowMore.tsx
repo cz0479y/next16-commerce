@@ -15,7 +15,7 @@ export default function ShowMore({ children, className, initial = 5 }: Props) {
   const remaining = Children.count(children) - initial;
 
   return (
-    <Boundary>
+    <Boundary hydration="client">
       <div>
         <div className={className}>{items}</div>
         {remaining > 0 && (
