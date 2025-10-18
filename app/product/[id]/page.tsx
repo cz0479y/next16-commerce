@@ -1,11 +1,14 @@
 import { Bookmark } from 'lucide-react';
 import { Suspense } from 'react';
-
 import BackButton from '@/components/ui/BackButton';
 import Card from '@/components/ui/Card';
 import Product from '@/features/product/components/Product';
-import ProductDetails, { SavedProduct } from '@/features/product/components/ProductDetails';
+import ProductDetails, { ProductDetailsSkeleton, SavedProduct } from '@/features/product/components/ProductDetails';
 import Reviews, { ReviewsSkeleton } from '@/features/product/components/Reviews';
+
+export async function generateStaticParams() {
+  return [{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }];
+}
 
 export default async function ProductPage({ params }: PageProps<'/product/[id]'>) {
   const { id } = await params;
@@ -19,11 +22,13 @@ export default async function ProductPage({ params }: PageProps<'/product/[id]'>
           <Product
             productId={productId}
             details={
-              <ProductDetails productId={productId}>
-                <Suspense fallback={<Bookmark aria-hidden className="text-gray size-5" />}>
-                  <SavedProduct productId={productId} />
-                </Suspense>
-              </ProductDetails>
+              <Suspense key={productId} fallback={<ProductDetailsSkeleton />}>
+                <ProductDetails productId={productId}>
+                  <Suspense fallback={<Bookmark aria-hidden className="text-gray size-5" />}>
+                    <SavedProduct productId={productId} />
+                  </Suspense>
+                </ProductDetails>
+              </Suspense>
             }
           />
         </Card>
