@@ -16,8 +16,8 @@ export function BoundaryProvider({ children }: { children: React.ReactNode }) {
 
   const toggleMode = () => {
     setMode(prev => {
-      if (prev === 'off') return 'rendering';
-      if (prev === 'rendering') return 'hydration';
+      if (prev === 'off') return 'hydration';
+      if (prev === 'hydration') return 'rendering';
       return 'off';
     });
   };
