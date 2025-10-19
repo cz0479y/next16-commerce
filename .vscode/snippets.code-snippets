@@ -36,6 +36,7 @@
         "prefix": "useAuth",
         "body": [
             "const { loggedIn: loggedInPromise } = useAuth()",
+            "const loggedIn = use(loggedInPromise);"
         ]
     },
     "suspenseWithFallback": {

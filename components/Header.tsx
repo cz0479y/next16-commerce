@@ -14,10 +14,10 @@ export default function Header() {
           </Link>
         </h1>
         <div className="flex items-center gap-4">
-          <BoundaryToggle />
           <Suspense fallback={<UserProfileSkeleton />}>{<UserProfile />}</Suspense>
         </div>
       </header>
+      <BoundaryToggle />
     </Boundary>
   );
 }

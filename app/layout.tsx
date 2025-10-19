@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: 'Next 15 Commerce',
 };
 
-export default async function RootLayout({ children }: LayoutProps<'/'>) {
+export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="en">
       <body className={GeistSans.className}>

@@ -41,14 +41,16 @@ export default function BoundaryToggle() {
   const { toggleMode, mode } = useBoundaryMode();
 
   return (
-    <Button
-      className="hidden gap-2 px-3 py-2 text-xs font-semibold tracking-wide md:flex"
-      variant="secondary"
-      onClick={toggleMode}
-      title={`Switch to ${getNextMode(mode)} boundaries`}
-    >
-      {getIcon(mode)}
-      {getLabel(mode).toUpperCase()}
-    </Button>
+    <div className="fixed right-8 bottom-4 z-50">
+      <Button
+        className="flex gap-2 px-3 py-2 text-xs font-semibold tracking-wide shadow-lg"
+        variant="secondary"
+        onClick={toggleMode}
+        title={`Switch to ${getNextMode(mode)} boundaries`}
+      >
+        {getIcon(mode)}
+        {getLabel(mode).toUpperCase()}
+      </Button>
+    </div>
   );
 }
