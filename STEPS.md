@@ -3,7 +3,7 @@
 ## Setup and problem
 
 - This is a e commerce demo app. The setup is the Next.js App Router, Prisma ORM and an Prisma Postgres DB, Tailwind CSS.
-- Demo app. Ecommerce mimic. Everything here looks pretty decent. Home page, browse page, about page, login page, profile page.
+- Demo app. Ecommerce mimic. Everything here looks pretty decent. Home page, browse page, about page, login page, profile page. But too many loading states for an ecommerce app.
 - I have all my pages here. I'm using feature slicing to keep the app router folder clean and easy to read. Services and queries talking to my db.
 - Purposefully added slowness to my data fetching.
 - This is a regular next.js codebase, nothing fancy, however, keep in mind we have a good mix of static and dynamic content because of our user dependent features.
