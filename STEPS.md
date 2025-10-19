@@ -44,17 +44,17 @@
 - I want to hide the excess categories if theres many. Notice the individual server components here. Let's do some RSC gymnastics. Replace div with ShowMore client wrapper and React.Children to maintain our separation of concerns, and reusability of the Categories component. Now, we have this interactive showmore wrapper. Notice the boundaries client and server, donut pattern again.
 - The compositional power of server components, Categories is passed into this ShowMore, handles its own data. Both can be used freely all over the app.
 - Donut pattern can be used for anything like this, i.e Carousels and more. Also using it for the modal, showcase modal boundary donut pattern again.
-- Now we have a pretty good architecture and best practice RSC patterns.
+- Now we have a pretty good architecture and best practice RSC patterns, which means we can move further to the last issue.
 
 ## Discuss dynamic issues
 
 - The last reported issue was a lack of static rendering strategies leading to additional server costs and degraded performance.
 - See build output: The entire app is entirely dynamic, problem is clear. Every page has a dynamic API dependency.
 - This is preventing us from caching anything or using ISR, even though so much of the app is static.
-- Wasting server resources constantly, quickly gets expensive. Crawlers will wait for this, and the QWV is not terrible, but it's slower than it needs to be and redundant. Why is this happening?
-- The main culprit is actually this auth check in my layout. My header is hiding my user profile, which is using cookies, which is forcing dynamic rendering. Auth check in layout. Classic. Everything I do is now dynamically being run on the server.
+- Wasting server resources constantly, quickly gets expensive. Crawlers will wait for content and it can be indexed, and the QWV is not terrible, but it's slower than it needs to be and redundant. Why is this happening?
+- The main culprit is actually this auth check in my layout. My header is hiding my user profile, which is using cookies, which is forcing dynamic rendering. Auth check in layout, which I definitely need. Classic. Everything I do is now dynamically being run on the server.
 - Even my non-user personalized content on my home screen like the featured product, I need to suspend too to avoid blocking the page, and even my about page which doesn't even have a dynamic API dep! Because remember, my pages are either be static OR dynamic.
-- This is a common issue and something that's been solved before. Let's briefly see which solutions people might resort to do in previous versions of Next.
+- This is a common issue and something that's been solved before. Let's briefly see which solutions people might resort to doing in previous versions of Next.
 
 ### Static/dynamic split
 
@@ -70,11 +70,12 @@
 - We can generateStaticParams the different variants of loggedIn/nonLoggedIn state.
 - Call this function instead of isAuthenticated now. Avoiding doing auth check in the components themselves.
 - This is actually a common pattern, and is also recommended by the vercel flags sdk using a precompute function. And used by i18n libraries.
-- Client side fetch with useSWR the user specific stuff on the product page, and the reviews because we want them fresh, cache HIT.
-- Passing lot's of props now from the server side params, losing compositional benefits.
-- But, hassle API Endpoints. Pages routes flashbacks.
-- And it's even more complex and we're even breaking the sweet new feature typed routes! Need this as Route everywhere. And what about the home page, do we need to client side fetch everything here too?
-- It's a viable pattern. Useful for things like feature flags and more regardless etc, , but I don't feel smart enough for this, and let's say we are not interested in rewriting our app.
+- But to be able to cache this product page, I need to client side fetch with useSWR the user specific stuff on the product page, and the reviews because we want them fresh. All to get this cache HIT!
+- Passing lot's of props now from the server side params, losing compositional benefits. And it's even more complex.
+- And, hassle API endpoints, multiple data fetching strategies again. Pages routes flashbacks.
+- (And we're even breaking the sweet new feature typed routes! Need this as Route everywhere.)
+- And what about the home page, do we need to client side fetch everything user specific here too?
+- This is a viable pattern, and useful for things like feature flags and more regardless etc, but let's say we are actually not interested in rewriting our app, and want to keep it as simple as possible.
 
 ## Mark dynamic/static components
 
@@ -88,7 +89,7 @@
 
 ### Home page
 
-- Now, everything here that's marked as hybrid can be cached. It's async and fetching something, but it does not depend on dynamic APIs, so we can share it across multiple users. Notice how right now its loading on every request.
+- Now, everything here that's marked as hybrid can be cached. It's async and fetching something, but it does not depend on request time information like cookies, so we can share it across multiple users. Notice how right now its loading on every request.
 - Enable cacheComponents. This will opt all our async calls into request time calls, and also give us errors whenever a dynamic API does not have a suspense boundary above it.
 - Add "use cache" to the Hero to cache this. Now it's non longer running on the server. Add cacheTag for reval. Mark it as "cached". We can remove this suspense boundary and skeleton. Worry less about millions of skeletons. See it's no longer loading.
 - (One cache key linked to components, no hassle revalidating many different pages).
