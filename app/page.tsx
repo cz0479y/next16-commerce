@@ -39,7 +39,11 @@ export default async function HomePage() {
               Unlock exclusive perks like extra discounts, early product launches, and priority support. Sign in to
               access your dashboard and discover new offers!
             </p>
-            <MembershipTile />
+            <Suspense fallback={<GeneralMembershipTile />}>
+              <Boundary rendering="dynamic" hydration="server">
+                <PersonalMembershipTile />
+              </Boundary>
+            </Suspense>
           </div>
           <div className="border-divider dark:border-divider-dark border bg-black/5 p-6 dark:bg-white/10">
             <h3 className="mb-2 text-xl font-bold tracking-tight uppercase">Trade-In Program</h3>
@@ -100,16 +104,6 @@ async function PersonalMembershipTile() {
     <LinkButton href="/user" variant="primary">
       Go to Dashboard
     </LinkButton>
-  );
-}
-
-function MembershipTile() {
-  return (
-    <Suspense fallback={<GeneralMembershipTile />}>
-      <Boundary rendering="dynamic" hydration="server">
-        <PersonalMembershipTile />
-      </Boundary>
-    </Suspense>
   );
 }
 
