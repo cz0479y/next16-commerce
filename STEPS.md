@@ -134,4 +134,4 @@
 - We don't see the params of the catgories on client side navs. And for products page, they're cached at the CDN edge after first generation.
 - Remember i have purposefully added a lot of slows to this app, but with just a few code changes and smart patterns, we improved performance drastically, reduced server costs by caching much more content, and improved maintainability with better architecture and less prop drilling.
 - There is no reason to be avoiding dynamic APIs anymore. There is not static and dynamic pages. No need for weird hacks or workarounds or multiple data fetching strategies or client fetching, don't need to compromising dynamic content or developer experience.
-- Every data fetch is server components! In modern Next.js, we can have one paradigm and one mental model, performant and composable by default.
+- Every data fetch is server components, and we decide how much static we want. In modern Next.js, we can have one paradigm and one mental model, performant and composable by default.
