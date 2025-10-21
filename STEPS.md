@@ -3,16 +3,16 @@
 ## Setup and problem
 
 - This is a simple app mimicking e commerce platform.
-- Show app. Home page user dep, browse page, product page user dep, about page, login page, profile page. We have a good mix of static and dynamic content because of our user dependent features. Everything here looks pretty decent, but there's certainly too many loading states for an ecommerce app.
+- Show app. Home page user dep, browse page, product about page, login page, page user dep page. We have a good mix of static and dynamic content because of our user dependent features. Everything here looks pretty decent, but there's certainly too many loading states for an ecommerce app.
 - Let's see the code.
 - App router, I have all my pages here. I'm using feature slicing to keep the app router folder clean and easy to read. Services and queries talking to my db which is using Prisma ORM. Purposefully added slowness to my data fetching.
-- Let's say the team here has reported issues with architecture and prop drilling, excessive client side JS, and lack of static rendering strategies leading to additional server costs and degraded performance.
+- App actually has issues with architecture and prop drilling, excessive client side JS, and lack of static rendering strategies leading to additional server costs and degraded performance. Common issues.
 - The goal here is to improve this regular Next.js codebase and enhance it with modern patterns on architecture, composition, and caching capabilities, to make it faster, more scalable, and easier to maintain.
 - (Improvements based on my exp building with server comp also and other codebases I have seen, and what devs commonly do wrong or struggle to find solutions for).
 
 ## Excessive prop drilling -> component level fetching and authProvider: app/page.tsx
 
-- The first reported issue was with architecture and excessive prop drilling, making it hard to maintain and refactor features. Let's check out the home page.
+- The first issue is with architecture and excessive prop drilling, making it hard to maintain and refactor features. Let's check out the home page.
 - I'm noticing some issues. Fetching auth state top level, passing down to components and using it for conditional rendering, multiple levels down. This is a common problem, making our components less reusable and composable, and the code hard to read.
 - We don't need to fetch top level with server components. Maybe we tried to improve performance and share this to make the page faster, but that's not necessary, and we are blocking the initial load too. Utilize react cache() to avoid duplicate calls. Then fetch inside components. Best practice is to push promises to resolve deeper down, for many reasons.
 - Refactor to add reach cache to deduplicate multiple calls to this per page load. If using fetch it's auto deduped. Fetch inside components, improve structure: PersonalizedSection suspend.
@@ -33,7 +33,7 @@
 
 ## Excessive client JS -> Client/Server composition: WelcomeBanner
 
-- The next reported issue was excessive client side JS.
+- The next issue is excessive client side JS.
 - Check out this client-side Pagination using search params. Client side due to nav status with a transition. Preventing default. There are some new tools we can use to handle this very common use case better. Remove all client side code here and isPending. Lost interactivity.
 - Replace with LinkStatus. A rather new nextjs feature, useLinkStatus. Like useFormStatus, avoid lack of feedback on stale navigation while waiting for the search param. See local pending state, using this also on the category links in the bottom here and the sort. Very small amount of client JS added, only what is needed for interactivity.
 - Revisit the WelcomeBanner. It's dismissing this with a useState(). Switched to client side fetching with useSWR just to make this dismissable and animated, multiple ways to fetch now with API layer, no types.
@@ -48,7 +48,7 @@
 
 ## Discuss dynamic issues
 
-- The last reported issue was a lack of static rendering strategies leading to additional server costs and degraded performance. Demo again the problems.
+- The last issue is a lack of static rendering strategies leading to additional server costs and degraded performance. Demo again the problems.
 - See build output: The entire app is entirely dynamic, problem is clear. Every page has a dynamic API dependency.
 - This is preventing us from using static rendering and for example ISR, even though so much of the app is static.
 - Wasting server resources constantly, quickly gets expensive. Crawlers will wait for content and it can be indexed, and the QWV is not terrible, but it's slower than it needs to be and redundant. Why is this happening?
