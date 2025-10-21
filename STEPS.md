@@ -6,13 +6,13 @@
 - Show app. Home page user dep, browse page, product about page, login page, page user dep page. We have a good mix of static and dynamic content because of our user dependent features. (Everything here looks pretty decent, but there's certainly too many loading states for an ecommerce app.)
 - Let's see the code.
 - App router, I have all my pages here. I'm using feature slicing to keep the app router folder clean and easy to read. Services and queries talking to my db which is using Prisma ORM. Purposefully added slowness to my data fetching.
-- App actually has commonly seen issues with prop drilling, excessive client side JS, and lack of static rendering strategies leading to additional server costs and degraded performance.
+- App actually has commonly seen issues with prop drilling making it hard to maintain and refactor features, excessive client side JS, and lack of static rendering strategies leading to additional server costs and degraded performance.
 - The goal here is to improve this regular Next.js codebase and enhance it with modern patterns on architecture, composition, and caching capabilities, to make it faster, more scalable, and easier to maintain.
 - (Improvements based on my exp building with server comp also and other codebases I have seen, and what devs commonly do wrong or struggle to find solutions for).
 
 ## Excessive prop drilling -> component level fetching and authProvider: app/page.tsx
 
-- The first issue is with architecture and excessive prop drilling, making it hard to maintain and refactor features. Let's check out the home page.
+- The first issue is with architecture and excessive prop drilling.
 - I'm noticing some issues. Fetching auth state top level, passing down to components and using it for conditional rendering, multiple levels down. This is a common problem, making our components less reusable and composable, and the code hard to read.
 - We don't need to fetch top level with server components. Maybe we tried to improve performance and share this to make the page faster, but that's not necessary, and we are blocking the initial load too. Utilize react cache() to avoid duplicate calls. Then fetch inside components. Best practice is to push promises to resolve deeper down, for many reasons.
 - Refactor to add reach cache to deduplicate multiple calls to this per page load. If using fetch it's auto deduped. Fetch inside components, improve structure: PersonalizedSection suspend.
