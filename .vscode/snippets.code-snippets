@@ -14,6 +14,15 @@
             "}"
         ],
     },
+    "membershipLink": {
+        "scope": "typescriptreact",
+        "prefix": "membershipLink",
+        "body": [
+            "<Suspense fallback={<GeneralMembershipLink />}>",
+            "  <PersonalMembershipLink />",
+            "</Suspense>"
+        ]
+    },
     "generateStaticParams": {
         "scope": "typescriptreact",
         "prefix": "generateStaticParams",
@@ -68,12 +77,12 @@
             "]);",
         ]
     },
-        "bannerContainer": {
-            "scope": "typescriptreact",
-            "prefix": "bannerContainer",
-            "body": [
-                "export default function BannerContainer({children}: { children: React.ReactNode }) {",
-            ]
-        },
+    "bannerContainer": {
+        "scope": "typescriptreact",
+        "prefix": "bannerContainer",
+        "body": [
+            "export default function BannerContainer({children}: { children: React.ReactNode }) {",
+        ]
+    },
 }
 
