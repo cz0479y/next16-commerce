@@ -44,14 +44,14 @@
 - Since we learned the donut pattern, let's use it for something else as well. I want to hide the some categories if theres many. Notice the individual server components here. We again want to avoid excessive client side JS, so avoid creating API endpoints and converting everything. Replace div with ShowMore client wrapper and React.Children to maintain our separation of concerns. Now, we have this reusable and interactive ShowMore wrapper, and reusable categories. Notice the boundaries client and server, donut pattern again.
 - The compositional power of server components, Categories is passed into this ShowMore, handles its own data. Both can be used freely all over the app.
 - Donut pattern can be used for anything, like carousels and modals more. Actually using it for the modal, showcase modal boundary donut pattern again.
-- Now we have a pretty good architecture and best practice RSC patterns, which means we can move further to the last issue.
+- Now we have a pretty good architecture, best practice RSC patterns, utilizing composition, which means we can move further to the last issue.
 
 ## Discuss dynamic issues
 
 - The last issue is a lack of static rendering strategies leading to additional server costs and degraded performance. Demo again the problems.
 - See build output: The entire app is entirely dynamic, problem is clear. Every page has a dynamic API dependency.
-- This is preventing us from using static rendering benefits and for example using ISR, even though so much of the app is static. Wasting server resources constantly, quickly gets expensive.
-- (Crawlers will wait for content and it can be indexed, and the QWV is not terrible, but it's slower than it needs to be and redundant).
+- This is preventing us from using static rendering benefits and for example using ISR, even though so much of the app is static. Wasting server resources constantly, quickly gets expensive, redundant.
+- (Crawlers will wait for content and it can be indexed, and the QWV is not terrible, but it's slower than it needs to be).
 - Why is this happening?
 - The main culprit is actually this auth check in my layout. My header is hiding my user profile, which is using cookies, which is forcing dynamic rendering. Auth check in layout, which I definitely need. Classic mistake. Everything I do is now dynamically being run on the server.
 - Even my non-user personalized content on my home screen like the featured product, I need to suspend too to avoid blocking the page, and even my about page which doesn't even have a dynamic API dep! Because remember, my pages are either be static OR dynamic.
@@ -77,9 +77,11 @@
 - (And we're even breaking the sweet new feature typed routes! Need this as Route everywhere.)
 - And what about the home page, do we need to client side fetch everything user specific here too?
 - This is a viable pattern, and useful for many regardless etc, but let's say we are actually not interested in rewriting our app.
-- What if we could avoid all of these smart workarounds? What if there was a simpler way? Go back to real vscode.
 
 ## Excessive dynamic rendering -> Composable caching with 'use cache'
+
+- Go back to real vscode.
+- What if we could avoid all of these smart workarounds? What if there was a simpler way?
 
 ### Home page
 
@@ -92,10 +94,10 @@
 - Try "use cache" Home page, see the error. Dynamic components imported here.
 - Add "use cache" to the Hero to cache this. Now it's non longer running on the server. Add cacheTag for fine grained revalidation with revalidateTag. Showcase cacheLife. Mark it as "cached". We can remove this suspense boundary and skeleton. See it's no longer loading.
 - (One cache key linked to components, no hassle revalidating many different pages).
-- We are no longer bound to page level static/dynamic rendering.
 - And every cached segment will included in the statically generated shell from Partial Prerendering, cached on the CDN. PPR goes down as far as the cache goes, until it meets a dynamic API, like the WelcomeBanner or the PersonalizedSection. Our Hero can be included in the static shell.
-- Do the same for the FeaturedCategories and FeaturedProducts: use cache and mark, remove suspense. Now they're all cached, no longer loading on every request. Only thing that loads is the personalized content. Less stress with skeletons.
+- Do the same for the FeaturedCategories and FeaturedProducts: use cache and mark, remove suspense. Less stress with skeletons.
 - If I had this auth dep here, PPR would not be able to include anything in the static shell. That's why my pattern of resolving promises deeper is good for both composition and caching.
+- Now they're all cached, no longer loading on every request. Only thing that loads is the personalized content. We are no longer bound to page level static/dynamic rendering.
 
 ### All page
 
@@ -114,7 +116,7 @@
 - Let's finally tackle the product page, arguably the hardest, also pre-marked with boundaries.
 - Add "use cache" to Product, mark cached, remove suspense, it's no longer loading on every request.
 - Error in product page, no cache above params. We will still see this params resolve in the deployment, it's inside params, so it can't be static. Either we add a loading.tsx, or we can use generateStaticParams. Add an example generateStaticParams for a few products. Now it will ready for those, then cached as it's generated by users. The error is gone. Pick what is best for your use case and data set.
-- Try add use cache to the product details. It fails, exposing our dynamic API. Why? We have a dynamic dep. A pretty cool optimistic save product button, showing the saved state of that product for the user. Instead of importing the dynamic dep, slot as children, and interleave it, like the donut pattern again. Composable caching! We can still cache the productDetails itself! Children reference can change without affecting the cache entry. Donut pattern, but for caching.  Now, we can cache the ProductDetails, mark cached.
+- Try add use cache to the product details. It fails, exposing our dynamic API. Why? We have a dynamic dep. A pretty cool optimistic save product button, showing the saved state of that product for the user. Instead of importing the dynamic dep, slot as children, and interleave it. Composable caching! Children reference can change without affecting the cache entry. Donut pattern, but for caching. Now, we can cache the ProductDetails, mark cached.
 - Remove details suspense, add the suspense there with Bookmark! Interactive user specific content still works.
 - Keep the Reviews hybrid, want them fresh.
 - No longer loading on every request. Small chunk of dynamic content only, pushed the loading state all the way down.
@@ -123,10 +125,10 @@
 
 ## Final demo
 
-- Head over to a deployed version.
+- Head over to a deployed version. Remember i have purposefully added a lot of slows to this app.
 - See the initial page loads. Almost my entire home page is already available. Only the personalized section and banner load. Navigate to the all products page, then the product page.
+- In prod, improved prefetching new client side router from next 16, shell is prefetched for even faster navigations. Params are already known for all links on the page. Clicking categories within the app already resolved search params, so the shell is already there. Only on reload can we see it resolve here.
 - See the boundary: again, every cached segment will be a part of the statically generated shell from Partial Prerendering, giving us this extreme performance.
-- In prod, within client side navs, with improved client side router from next 16, shell can also be prefetched for even faster navigations. Params are already known for all links on the page. Clicking categories within the app already resolved search params, so the shell is already there. Only on reload can we see it resolve here.
-- Remember i have purposefully added a lot of slows to this app, but with just a few code changes and smart patterns, we increased maintainability with better architecture and less prop drilling, reduced redundant client js and allowed for more component reuse, and improved performance drastically and reduced server costs by caching much more content.
-- To summarize, there is no reason to be avoiding dynamic APIs anymore. There is not static and dynamic pages. No need for weird hacks or workarounds or multiple data fetching strategies. Don't need to compromise dynamic content or developer experience.
-- In modern Next.js, dynamic vs static is a scale, and we decide how much static we want in apps. We can have one mental model, performant and scalable by default.
+- With just a few code changes and smart patterns, we increased maintainability with better architecture and less prop drilling, reduced redundant client js and allowed for more component reuse, and improved performance drastically and reduced server costs by caching much more content.
+- To summarize, there is not static OR dynamic pages. We don't need to be avoiding dynamic APIs anymore, or compromise dynamic content. Don't have to create complex hacks or workarounds or add multiple data fetching strategies, and make the developer experience worse, just for that cache HIT.
+- In modern Next.js with cacheComponents, dynamic vs static is a scale, and we decide how much static we want in our apps. We can use this one mental model, performant, composable and salable by default.
