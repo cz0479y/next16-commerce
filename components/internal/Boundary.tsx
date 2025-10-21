@@ -91,7 +91,6 @@ export default function Boundary({ children, rendering, hydration, label, showLa
     }
   }
 
-  // If the content is small, show just a small dashed circle
   if (isSmall) {
     let circleColorClasses = '';
 
