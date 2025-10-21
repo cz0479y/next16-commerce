@@ -37,7 +37,7 @@ export default async function HomePage() {
       <Suspense fallback={<FeaturedProductsSkeleton />}>
         <FeaturedProducts />
       </Suspense>
-      <Boundary rendering="static" hydration="server">
+      <Boundary hydration="server">
         <section className="grid gap-6 md:grid-cols-2">
           <div className="bg-accent/10 dark:bg-accent/20 border-divider dark:border-divider-dark border p-6">
             <h3 className="mb-2 text-xl font-bold tracking-tight uppercase">Member Rewards</h3>
