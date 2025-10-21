@@ -3,7 +3,7 @@ import Search, { SearchSkeleton } from '@/components/Search';
 import SortButton, { SortButtonSkeleton } from '@/components/SortButton';
 import { getCategories } from '@/features/category/category-queries';
 import CategoryFilters from '@/features/category/components/CategoryFilters';
-import ProductList from '@/features/product/components/ProductList';
+import ProductList, { ProductListSkeleton } from '@/features/product/components/ProductList';
 
 export default async function AllPage({ searchParams }: PageProps<'/'>) {
   const resolvedSearchParams = await searchParams;
@@ -35,7 +35,9 @@ export default async function AllPage({ searchParams }: PageProps<'/'>) {
               <SortButton />
             </Suspense>
           </div>
-          <ProductList searchParams={resolvedSearchParams} />
+          <Suspense fallback={<ProductListSkeleton />}>
+            <ProductList searchParams={resolvedSearchParams} />
+          </Suspense>
         </div>
       </div>
     </>
