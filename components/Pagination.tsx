@@ -40,7 +40,7 @@ export default function Pagination({
       if (key !== 'page' && value) params.set(key, value.toString());
     });
     if (page > 1) params.set('page', page.toString());
-    router.push(`/all?${params.toString()}`);
+    router.push(`/all?${params.toString()}`, { scroll: false });
   };
 
   return (

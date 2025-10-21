@@ -13,7 +13,7 @@ export default function WelcomeBanner({ loggedIn }: { loggedIn: boolean }) {
   if (dismissed) return null;
 
   return (
-    <Boundary>
+    <Boundary hydration="client">
       <div className="border-divider dark:border-divider-dark from-accent/5 via-accent/3 dark:from-accent/10 dark:via-accent/5 relative flex items-start justify-between gap-3 border bg-gradient-to-tr to-transparent p-4 sm:gap-4 sm:p-5 dark:to-transparent">
         <div className="flex-1">
           <PersonalBanner loggedIn={loggedIn} />
@@ -44,7 +44,7 @@ export function PersonalBanner({ loggedIn }: { loggedIn: boolean }) {
   const firstName = account?.firstName || account?.name.split(' ')[0];
 
   return (
-    <Boundary>
+    <Boundary hydration="client" rendering="dynamic">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: [0, 0.3, 1, 0.8, 1] }}
@@ -103,7 +103,7 @@ export function PersonalBanner({ loggedIn }: { loggedIn: boolean }) {
 
 export function GeneralBanner() {
   return (
-    <Boundary>
+    <Boundary rendering="static">
       <div className="flex flex-col justify-between pb-6">
         <span className="mb-3 inline-block w-fit bg-black px-2.5 py-1 text-xs font-bold tracking-[0.2em] text-white uppercase dark:bg-white dark:text-black">
           Member Perks
