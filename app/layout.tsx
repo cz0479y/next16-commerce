@@ -25,7 +25,7 @@ export default async function RootLayout({ children }: LayoutProps<'/'>) {
     <html lang="en">
       <body className={GeistSans.className}>
         <BoundaryProvider>
-          <Boundary rendering="static">
+          <Boundary rendering="static" hydration="server">
             <div className="flex min-h-screen flex-col">
               <AuthProvider loggedIn={loggedIn}>
                 <Header />
