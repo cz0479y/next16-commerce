@@ -95,13 +95,13 @@
 ### All page
 
 - See the rest of the boundaries pre-marked on other pages: all products. Categories and products. Reload -> we can cache this too.
-- We have an error from nextjs though, categories doesn't have a suspense above it. Ah, my page actually blocked, slow loading.
-- We are getting help identifying blocking calls, which is common problem. CacheComponents will help us avoid performance issues. CacheComponents tells us we should either cache or suspend this. Make a choice: I can either a loading.tsx, or cache the data fetch.
+- We have an error from nextjs though, categories doesn't have a suspense above it. Blocking route. Ah, my page actually blocked, slow loading.
+- CacheComponents helping identifying blocking calls, a is common problem, avoiding performance issues. Next.js tells us we should either cache or suspend this. Make a choice: I can either a loading.tsx, or cache the data fetch.
 - Simple solution, add huge loading.tsx skeleton code. That works, not useful loading UI though, cant interact with anything.
-- However, with cacheComponents, dynamic is like a scale, and it's up to us to decide how much static we want. Let's shift the page more towards static, and create a bigger static shell here. Delete loading.tsx.
-- Use pattern we learned in the beginning, resolve getCategories deeper down, inside the CategoryFilters component twice for my responsive view, add react cache() deduping, not a problem for my responsive view. Use individual skeletons inside page.tsx for the categoryFilters, or, add use cache to this, and mark it as cached.
+- So, with cacheComponents, dynamic is like a scale, and it's up to us to decide how much static we want. Let's shift the page more towards static, and create a bigger static shell here. Delete loading.tsx.
+- Use pattern we learned in the beginning, resolve getCategories deeper down, inside the CategoryFilters component twice for my responsive view, add react cache() deduping, not a problem for my responsive view. Add use cache to this, and mark it as cached, dont need to suspend.
 - Still error on searchparams, dynamic API, cant cache this. Refactor to resolve deeper down. Now I have a bigger static shell. Error gone, suspended by the product list.
-- Loading state, search is now accessible from the start, and I can see my welcome banner and close this already.
+- Loading state, search is now accessible from the start, and I can see my welcome banner and close this already. Great UX improvement.
 - As you can see, CacheComponents making sure we follow best practices for RSC, and actually helping us think about where we resolve our promises, improving component architecture.
 - Keep my Products hybrid, because I want them fresh.
 - Footer -> Categories: Can only use cache async functions, but since we already use the donut here it’s not a problem for the ShowMore, allowing us to cache more content as well as getting compositional benefits. It's all connected. Remove suspense.
