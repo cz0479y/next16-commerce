@@ -95,16 +95,14 @@
 ### All page
 
 - See the rest of the boundaries pre-marked on other pages: all products. Categories and products. Reload -> we can cache this too.
-- We have an error from nextjs though, categories doesn't have a suspense above it. Ah, my page actually blocked, slow loading. CacheComponents tells us we should either cache or suspend this. Make a choice: I can either a loading.tsx, or shift this page more towards static.
-- We are getting help identifying blocking calls, which is common problem. CacheComponents will help us avoid performance issues.
-- (Notice blocking in the network tab. The entire page is blocked on something. It's really hard to know where the blocking is coming from without it).
-- Simple solution, add huge loading.tsx skeleton code. That works.
-- However, ith cacheComponents, dynamic is like a scale, and it's up to us to decide how much static we want. Let's create a bigger static shell here. Delete loading.tsx.
-- Resolve getCategories deeper down, pattern we learned in the beginning, inside the CategoryFilters component, add react cache() deduping, not a problem for my responsive view. Use individual skeletons inside page.tsx for the categoryFilters.
-- Still error on searchparams, refactor to resolve deeper down, error gone. Now I have a bigger static shell, because the searchparams and the category fetch dont prevent this content from being statically generated anymore. Error gone, suspended by the product list.
+- We have an error from nextjs though, categories doesn't have a suspense above it. Ah, my page actually blocked, slow loading.
+- We are getting help identifying blocking calls, which is common problem. CacheComponents will help us avoid performance issues. CacheComponents tells us we should either cache or suspend this. Make a choice: I can either a loading.tsx, or cache the data fetch.
+- Simple solution, add huge loading.tsx skeleton code. That works, not useful loading UI though, cant interact with anything.
+- However, with cacheComponents, dynamic is like a scale, and it's up to us to decide how much static we want. Let's shift the page more towards static, and create a bigger static shell here. Delete loading.tsx.
+- Use pattern we learned in the beginning, resolve getCategories deeper down, inside the CategoryFilters component, add react cache() deduping, not a problem for my responsive view. Use individual skeletons inside page.tsx for the categoryFilters, or, add use cache to this, and mark it as cached.
+- Still error on searchparams, dynamic API, cant cache this. Refactor to resolve deeper down. Now I have a bigger static shell. Error gone, suspended by the product list.
 - Loading state, search is now accessible from the start, and I can see my welcome banner and close this already.
 - As you can see, CacheComponents making sure we follow best practices for RSC, and actually helping us think about where we resolve our promises, improving component architecture.
-- Add use cache to the CategoryFilters, mark cached, remove suspense.
 - Keep my Products hybrid, because I want them fresh.
 - Footer -> Categories: Can only use cache async functions, but since we already use the donut here it’s not a problem for the ShowMore, allowing us to cache more content as well as getting compositional benefits. It's all connected. Remove suspense.
 - See initial load, big static shell, only product list loads.
