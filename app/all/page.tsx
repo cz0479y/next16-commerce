@@ -6,8 +6,8 @@ import CategoryFilters from '@/features/category/components/CategoryFilters';
 import ProductList, { ProductListSkeleton } from '@/features/product/components/ProductList';
 
 export default async function AllPage({ searchParams }: PageProps<'/'>) {
-  const resolvedSearchParams = await searchParams;
   const categories = await getCategories();
+  const resolvedSearchParams = await searchParams;
 
   return (
     <>

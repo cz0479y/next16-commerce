@@ -4,7 +4,7 @@ import { slow } from '@/utils/slow';
 import 'server-only';
 
 export const getCategories = cache(async () => {
-  await slow();
+  await slow(2000);
 
   const categories = await prisma.product.groupBy({
     by: ['category'],
