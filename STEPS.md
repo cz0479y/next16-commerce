@@ -7,14 +7,14 @@
 - Let's see the code.
 - App router, I have all my pages here. I'm using feature slicing to keep the app router folder clean and easy to read. Services and queries talking to my db which is using Prisma ORM. Purposefully added slowness to my data fetching.
 - App actually has commonly seen issues with prop drilling making it hard to maintain and refactor features, excessive client side JS, and lack of static rendering strategies leading to additional server costs and degraded performance.
-- The goal here is to improve this regular Next.js codebase and enhance it with modern patterns on architecture, composition, and caching capabilities, to make it faster, more scalable, and easier to maintain.
+- The goal here is to improve this regular Next.js codebase and enhance it with examples modern patterns on architecture, composition, and caching capabilities, to make it faster, more scalable, and easier to maintain.
 - (Improvements based on my exp building with server comp also and other codebases I have seen, and what devs commonly do wrong or struggle to find solutions for).
 
 ## Excessive prop drilling -> component level fetching and authProvider: app/page.tsx
 
-- Let's start simple, the first issue is with architecture and excessive prop drilling.
+- Let's start simple, the first issue is with architecture and excessive prop drilling. To be able to take advantage of all the new features in next 16, we need to make sure we are following best practises for server components.
 - I'm noticing some issues. Fetching auth state top level, passing to components multiple levels down. This is a common problem, making our components less reusable and composable, and the code hard to read.
-- But we are blocking the initial load. We don't need to fetch top level with server components. Best practice is to push promises to resolve deeper down.
+- But we are blocking the initial load, might be hard to know. We don't need to fetch top level with server components. Best practice is to push promises to resolve deeper down. We will see later how we can get help with this though.
 - Refactor to add reach cache to deduplicate multiple calls to this per page load. If using fetch it's auto deduped. Fetch inside components, improve structure: PersonalizedSection suspend.
 - (MembershipTile, suspend the personalized for the general, ensuring we have a proper fallback and avoiding CLS).
 - What about client WelcomeBanner, WelcomeBanner? Cant use my await isAuth. Always need this dep when using WelcomeBanner, passing it multiple levels down, forcing the parent to handle this dep, cant move this freely. This loggedIn a dep we will encounter forever into the future of our apps life.
@@ -34,7 +34,7 @@
 
 ## Excessive client JS -> Client/Server composition: WelcomeBanner
 
-- The next issue is excessive client side JS.
+- The next issue is excessive client side JS, and large components with multiple responsibilities.
 - (Check out this client-side Pagination using search params. Client side due to nav status with a transition. Preventing default. There are some new tools we can use to handle this very common use case better. Remove all client side code here and isPending. Lost interactivity).
 - (Replace with LinkStatus. A rather new nextjs feature, useLinkStatus. Like useFormStatus, avoid lack of feedback on stale navigation while waiting for the search param. See local pending state, using this also on the category links in the bottom here and the sort. Very small amount of client JS added, only what is needed for interactivity).
 - Revisit the WelcomeBanner. It's dismissing this with a useState(). Switched to client side fetching with useSWR just to make this dismissable, multiple ways to fetch now with API layer, no types.
