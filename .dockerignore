@@ -1,0 +1,14 @@
+node_modules
+.next
+.git
+.gitignore
+*.md
+.env
+.env.*
+!.env.sample
+prisma/dev.db
+prisma/dev.db-journal
+prisma/migrations
+.DS_Store
+.vscode
+*.code-workspace

@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
       dynamic: 30,
     },
   },
+  output: 'standalone',
   reactCompiler: true,
   typedRoutes: true,
 };
